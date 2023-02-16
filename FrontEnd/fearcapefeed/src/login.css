@@ -1,0 +1,81 @@
+.login {  
+    margin: 20px;
+    align-self: center;
+    border: none;
+    border-radius: 5px;
+}
+#login form{
+  margin: 90px 20px;
+}
+.login-details h3{
+  color: #008f98;
+}
+button {
+    color: white;
+    padding: 14px 20px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    opacity: 0.9;
+    border: none;
+  }
+.login .forms{
+  margin: 30px;
+  margin-top:30px;
+}
+
+#login input[type=text], input[type=password]{   
+    width: 77%;   
+    margin: 5px 0;  
+    padding: 15px 24px;   
+    display: inline-block;
+    border:none;   
+    border-radius: 30px; 
+    background-color: #e0e0e0;
+    box-sizing: border-box;   
+}
+input:focus-visible{
+    outline: none;
+}
+button:hover {   
+    opacity: 1;   
+}
+.login .loginbtn {  
+  background-color: #008f98;
+  margin-top: 5px;
+  padding: 11px 50px;
+  border-radius: 22px;
+  }
+/* .container .forgot{ 
+    padding: 5px;
+    text-align: center;
+    font-size: 13px;
+  } */
+.login-image-div{
+    width: 150px;
+    height: 150px;
+}
+.image-div{
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.user-image{
+  width: inherit;
+}
+
+.newuser{
+    margin: 180px 0;
+    color:#e0e0e0
+
+}
+.newuser button{
+  background-color: #e0e0e0;
+  font-size: medium;
+  font-weight: 600;
+}
+.newuser button a{
+  text-decoration: none;
+  color: rgb(15, 15, 15);
+}

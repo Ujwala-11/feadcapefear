@@ -1,0 +1,49 @@
+.signup {  
+    margin: 20px;
+    align-self: center;
+    border: none;
+    border-radius: 5px;
+}
+.signup-form-details h3{
+  color: #008f98;
+}
+.login-image-div{
+    width: 150px;
+    height: 150px;
+  }
+  .image-div{
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid black;
+  }
+  .user-image{
+    height: inherit;
+    width: inherit;
+  }
+  button {
+    color: white;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    opacity: 0.9;
+    background-color: #008f98;
+    padding: 11px 50px;
+    border-radius: 22px;
+    border: none;
+    
+  }
+  .signup input[type=text], input[type=password], select {   
+    width: 77%;   
+    margin: 5px 0;  
+    padding: 15px 24px;   
+    display: inline-block;
+    border:none;   
+    border-radius: 30px; 
+    background-color: #e0e0e0;
+    box-sizing: border-box;   
+}
+.d-none{
+  display:none;
+}
