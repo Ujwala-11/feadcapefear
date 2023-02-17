@@ -10,7 +10,7 @@ Open your MYsql client or server and create a database with name "mytestdb". The
 "**axios**": Axios is used to make requests to an API, return data from the API. @https://www.npmjs.com/package/axios
 "**react-formidable**": To upload files or for parsing form data , formidable is used. @https://www.npmjs.com/package/react-formidable
 "**react-scripts**": The react-scripts sets up the development environment and starts a server. @https://www.npmjs.com/package/react-scripts
-"**fs**: : File System makes file opertaion of api's simple. https://www.npmjs.com/package/fs-react
+"**fs**: : File System makes file opertaion of api's simple. @https://www.npmjs.com/package/fs-react
 
 **Backend Dependencies :** 
 
@@ -28,6 +28,6 @@ Open your MYsql client or server and create a database with name "mytestdb". The
 "**sharp**": sharp compresses images faster than most other Node. @https://www.npmjs.com/package/sharp
 
 These are the Plugins used in the frontend and backend of this application. To run these plugins ,Open terminal in VScode and change directory to the folder which you created.
-use **npm install** 
+use "**npm install** "
 
 
