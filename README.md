@@ -5,15 +5,12 @@ Open your MYsql client or server and create a database with name "mytestdb". The
 
 **Frontend Dependencies:** 
 
-"react": To define React components in the application , The react package is used. @https://www.npmjs.com/package/react
-"react-router-dom": React Router Dom is used to build single-page applications. @https://www.npmjs.com/package/react-router-dom
-"axios": Axios is used to make requests to an API, return data from the API. @https://www.npmjs.com/package/axios
-"react-formidable": To upload files or for parsing form data , formidable is used. @https://www.npmjs.com/package/react-formidable
-"react-scripts": The react-scripts sets up the development environment and starts a server. @https://www.npmjs.com/package/react-scripts
-"fs: : File System makes file opertaion of api's simple. https://www.npmjs.com/package/fs-react
-
-These are the Plugins used in the frontend of this application. To run these plugins ,Open terminal in VScode and change directory to the folder which you created.
-use **npm install** 
+"**react**": To define React components in the application , The react package is used. @https://www.npmjs.com/package/react
+"**react-router-dom**": React Router Dom is used to build single-page applications. @https://www.npmjs.com/package/react-router-dom
+"**axios**": Axios is used to make requests to an API, return data from the API. @https://www.npmjs.com/package/axios
+"**react-formidable**": To upload files or for parsing form data , formidable is used. @https://www.npmjs.com/package/react-formidable
+"**react-scripts**": The react-scripts sets up the development environment and starts a server. @https://www.npmjs.com/package/react-scripts
+"**fs**: : File System makes file opertaion of api's simple. https://www.npmjs.com/package/fs-react
 
 **Backend Dependencies :** 
 
@@ -28,6 +25,8 @@ use **npm install**
 "**http-errors**": HTTP-errors is used for generating errors for Node.js applications. @https://www.npmjs.com/package/http-errors
 "**mysql**": It connects database with server @https://www.npmjs.com/package/mysql
 "**path**": The Path module provides a way of working with directories and file paths. @https://www.npmjs.com/package/path
-"**sharp**": @https://www.npmjs.com/package/sharp
+"**sharp**": sharp compresses images faster than most other Node. @https://www.npmjs.com/package/sharp
 
 
+These are the Plugins used in the frontend and backend of this application. To run these plugins ,Open terminal in VScode and change directory to the folder which you created.
+use **npm install** 
