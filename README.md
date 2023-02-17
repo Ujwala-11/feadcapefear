@@ -29,7 +29,7 @@ Open your MYsql client or server and create a database with name "mytestdb". The
 
 These are the Plugins used in the frontend and backend of this application. To run these plugins, Open terminal in VScode and change directory to the folder which you created. use "**npm install**"
 
-**Configurations**
+**Configurations :**
 Frontend : By default frontend is configure to run on PORT:4000 and you can change port in the file package.json in frontend/fearcapefeed
 Backend : By default backend is configure to run on PORT:2000 and you can change port in the file ./bin/www in backend/server.
 Database : For connecting your database to backed, go to dbconfig file in server and change your password.
