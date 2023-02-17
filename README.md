@@ -27,7 +27,4 @@ Open your MYsql client or server and create a database with name "mytestdb". The
 "**path**": The Path module provides a way of working with directories and file paths. @https://www.npmjs.com/package/path
 "**sharp**": sharp compresses images faster than most other Node. @https://www.npmjs.com/package/sharp
 
-These are the Plugins used in the frontend and backend of this application. To run these plugins ,Open terminal in VScode and change directory to the folder which you created.
-use "**npm install** "
-
-
+These are the Plugins used in the frontend and backend of this application. To run these plugins ,Open terminal in VScode and change directory to the folder which you created. use "**npm install**"
