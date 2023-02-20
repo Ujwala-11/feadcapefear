@@ -34,4 +34,18 @@ Frontend : By default frontend is configure to run on PORT:4000 and you can chan
 Backend : By default backend is configure to run on PORT:2000 and you can change port in the file ./bin/www in backend/server.
 Database : For connecting your database to backed, go to dbconfig file in server and change your password.
 
+**Forntend :**
+**Signup panel  :** This app Start from signingup user. The user needs to enter his details like Image, Name , Name of Organization and password to singup, then user can see a alert box which has userid. The user needs to copy that userid for logingin.
+
+**Admin Panel :** After the user signup.the user needs to wait for admin approval, In Admin Panel, the user image and name with his organization is displayed to the admin to approve or Decline the user. If user is approved then , he can login with his userid and password and if user is declined then the user will get alert saying invalid credentials.
+
+**Login panel:** The approved user can login with his userid and password then the user can see a dashboard.
+
+**Dashboard panel:** In dashboard, the user can see three panels(left panel ,right panel and main panel)
+**Left panel:** 
+The left panel consists of Userimage, Userid, User Organization at the top of left panel.
+Then we have Groups , one user can access only one group.
+Then the user Profile content like User name , Organization id and organization Name.
+At the bottom of left panel, User can see a Logout Button which redirects User to Login Page.
+
 
