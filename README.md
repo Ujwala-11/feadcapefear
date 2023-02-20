@@ -47,12 +47,28 @@ The left panel consists of Userimage, Userid, User Organization at the top of le
 Then we have Groups , one user can access only one group.
 Then the user Profile content like User name , Organization id and organization Name.
 At the bottom of left panel, User can see a Logout Button which redirects User to Login Page.
-
-**Right panel:** 
-The Right Panel has the users who are using this application and when You select a User from the list, That specific user chatbox will be shown at bottom of Right panel and You can start chattng with that user. 
-
 **Main Panel:**
 At the Top Of the Main panel, The user can see a Create Post Button. When the user click on it, Postbox can be seen.
 The User need to select the post Type Emergency Or normal and Write something to Post ,Select Image which the user what to post , Tag the location and then click on
 post button.
 The Post can be seen in the on the Main panel if it is emergency But if it is normal post then select All posts to see the Post. 
+All the users, who are using this application can see this Post, Like and comment on this post and can see the Other users who commented on this post.
+**Right panel:** 
+The Right Panel has the users who are using this application and when You select a User from the list, That specific user chatbox will be shown at bottom of Right panel and You can start chattng with that user. 
+
+**Groups Panel:** In the left panel of dashbord we can see the Groups and name of user organization. the user is directed to groups when he click on his organization.
+the Groups panel is same as dashboard panel, the user can see three panels(left panel ,right panel and main panel)
+**Left panel:** 
+The left panel consists of Userimage, Userid, User Organization at the top of left panel.
+Then we have Groups and the user group name.
+At the bottom of left panel, User can see a Logout Button which redirects User to Login Page.
+**Main Panel:**
+At the Top Of the Main panel, The user can see a Create Post Button. When the user click on it, Postbox can be seen.
+The User need to select the post Type Emergency Or normal and Write something to Post ,Select Image which the user what to post , Tag the location and then click on
+post button.
+The Post can be seen in the on the Main panel if it is emergency But if it is normal post then select All posts to see the Post.
+Only the users who are in same organization as the user can see this Post, Like and comment on this post and can see the Other users who commented on this post.
+
+**Right panel:** 
+The Right Panel has the users who are in same Organization. At the Bottom Of the Panel, There is a group chatbox You can start chattng with the other users. 
+
