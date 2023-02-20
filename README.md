@@ -48,4 +48,11 @@ Then we have Groups , one user can access only one group.
 Then the user Profile content like User name , Organization id and organization Name.
 At the bottom of left panel, User can see a Logout Button which redirects User to Login Page.
 
+**Right panel:** 
+The Right Panel has the users who are using this application and when You select a User from the list, That specific user chatbox will be shown at bottom of Right panel and You can start chattng with that user. 
 
+**Main Panel:**
+At the Top Of the Main panel, The user can see a Create Post Button. When the user click on it, Postbox can be seen.
+The User need to select the post Type Emergency Or normal and Write something to Post ,Select Image which the user what to post , Tag the location and then click on
+post button.
+The Post can be seen in the on the Main panel if it is emergency But if it is normal post then select All posts to see the Post. 
