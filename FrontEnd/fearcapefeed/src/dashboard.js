@@ -12,7 +12,7 @@ export default class Dashboard extends Component {
         apiResponse:" ",userid:'',firstname:'',lastname:'',organizationname:'',organizationid:'',
         isloggedin:'',image:'',imagefile:null,filechosen:false, preview:"" ,posts:[],details:[],chats:[],
         userValue:'',userselected:false,selecteduserId:'',curDT : new Date().toLocaleString(),chatselected:false,
-        status:0,showallposts:false,selectedpostid:'',latitude:'0',longitude:'0',
+        status:0,showallposts:false,selectedpostid:'',latitude:'0',longitude:'0',selectedPosttype:"",
     }
     constructor(props){
 		super(props);
@@ -27,10 +27,10 @@ export default class Dashboard extends Component {
         this.selectPosts=this.selectPosts.bind(this);
         this.commentSend=this.commentSend.bind(this);
         this.logincheck=this.logincheck.bind(this);
-        // this.refreshchat=this.refreshchat.bind(this);
         this.like=this.like.bind(this);
         this.unlike=this.unlike.bind(this);
         this.taglocation=this.taglocation.bind(this);
+        this.handleOptionChange=this.handleOptionChange.bind(this);
     }
     componentDidMount() {
         this.setState({userid:window.localStorage.getItem("userid")});
@@ -92,7 +92,12 @@ filechange(e){
     document.getElementById('img-file').click();
   }
   post(){ 
-    var postType = document.getElementById("post-type").value;
+    var postType = this.state.selectedPosttype;
+    if(postType==='emergency'){
+        postType=1
+    }else{
+        postType=2
+    }
     var postText = document.getElementById("post-text").value;
     let formdata = new FormData();
     formdata.append('image', this.state.imagefile);
@@ -181,16 +186,16 @@ taglocation(e){
       }
 }
 like(e){
-var postid=e.currentTarget.dataset.pid;
-const data={
-    postid:postid,
-    userid:window.localStorage.getItem("userid")
-}
+    var postid=e.currentTarget.dataset.pid;
+    const data={
+        postid:postid,
+        userid:window.localStorage.getItem("userid")
+    }
 
-axios.post(address+'likepost',data)
-.then(res=>{
-    window.location.reload();
-});
+    axios.post(address+'likepost',data)
+    .then(res=>{
+        window.location.reload();
+    });
 }
 unlike(e){
     var postid=e.currentTarget.dataset.pid;
@@ -204,6 +209,13 @@ unlike(e){
         window.location.reload();
     });
 }
+
+handleOptionChange(e) {
+    this.setState({
+        selectedPosttype:e.currentTarget.value
+    })
+}
+  
 logout(){
     window.localStorage.clear();
     window.location.reload();
@@ -212,10 +224,9 @@ logout(){
 render(){
     return(
         <>
-        <div className='dashboard'>
             {window.localStorage.getItem('role')=='USER' &&
             window.localStorage.getItem('status')==0 &&
-            <div>
+            <div className='dashboard'>
             <p>Your Account is waiting for approval by admin! You will be able to access the app once your account is approved by admin</p>
             <p>Please note your userid for logging into the app<br/>userid: {window.localStorage.getItem('userid')}</p>
             <div className="logout">
@@ -224,7 +235,7 @@ render(){
             </div>
             }
             {window.localStorage.getItem('role')!='USER' &&
-            <div>
+            <div className='dashboard'>
                 <p>Hi {window.localStorage.getItem('firstname')}! Profiles are waiting for your approval</p>
                 <div className="logout_admin">
                         <button type="button"  onClick={this.logout} id="logoutbtn"><a>Logout</a></button>
@@ -232,19 +243,21 @@ render(){
                 <Admin/>
             </div>
             }   
-        </div>
         {window.localStorage.getItem('role')=='USER' &&
         window.localStorage.getItem('status')==1 &&
         <div className='container-fluid p-0 m-0'>
-        <div className='rows sticky-nav'>
-            <ul className='navbar'>
+        <div className='rows sticky-nav bg-1'>
                 <div className='container pt-2 pb-2'>
-                    <li><a className='brand' href="#icon">FCF</a></li>
-                <li><a  className="nav-icon" href="/dashboard"><i className='fa fa-home'></i></a></li>
+                <a className='brand' href="#icon">FCF</a>
+                <ul className='nav-menu'>
+                    <li><a className="nav-icon selected" href="/dashboard"><i className='fa fa-home'></i>Home</a></li>
+                    <li><a className='nav-icon' href="/groups"><i className="fa fa-group"></i>{this.state.organizationname}</a></li>
+                    {/* <li><a className="nav-icon" ><i className="fa fa-user"></i>Volunteer</a></li> */}
+                    <li><a className="nav-icon" onClick={this.logout} id="logoutbtn"><i className='fa fa-power-off'></i>Logout</a></li>
+                    </ul>
 
                 </div>
                 
-            </ul>
         </div>  
        
         <div className="container">
@@ -261,10 +274,7 @@ render(){
                     </div>
                     <div className='spacer-30'></div>
                     <div className="pane-content">
-                        <h5>Groups</h5>
-                        <h6> <a href='/groups'>{this.state.organizationname}</a></h6>
                         
-                        <hr/>
                         <h5>Profile Content</h5>
                         <hr/>
                         <ul className='profile-content'>
@@ -275,10 +285,6 @@ render(){
                         
                     </div>
                     <hr/>
-                    
-                    <div className="logout">
-                        <button type="button"  onClick={this.logout} id="logoutbtn"><a>Logout</a></button>
-                    </div>
                 </div>
             
                 <div className="col-md-6 center-pane mx-1">
@@ -292,12 +298,13 @@ render(){
                         </div>
                         <div id="post-form" className='post-form' >
                             <div className='form-group'>
-                                <label>Post Type : </label>
-                                <select name="post-type" className='post-type' id="post-type" defaultValue={0}>
-                                    <option value='0' disabled >Select Post Type</option>
-                                    <option value="1">Emergency</option>
-                                    <option value="2">Normal</option>
-                                </select>
+                            <label>Post Type : </label>
+                            <form>
+                                <div className="radio">
+                                    <label><input type="radio" id="post-type" value="emergency" checked={this.state.selectedPosttype=="emergency"} onChange={this.handleOptionChange} />Emergency</label>
+                                    <label><input type="radio" id="post-type" value="normal" checked={this.state.selectedPosttype=="normal"} onChange={this.handleOptionChange} />Normal</label>
+                                </div>
+                            </form>
                             </div>
                             <textarea id="post-text" className='post-text' type="text" rows="3" placeholder="Write somethng .." ></textarea>
 

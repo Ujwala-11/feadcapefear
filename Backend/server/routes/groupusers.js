@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
         });
         connection.connect();
 
-        connection.query("SELECT * FROM user_details where user_id != '"+userid+"' and organization_id='"+orgid+"'", (err,data) => {
+        connection.query("SELECT * FROM user_details where (user_id != '"+userid+"' and organization_id='"+orgid+"') and status=1", (err,data) => {
           
         if (err)
         throw err;  

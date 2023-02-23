@@ -11,7 +11,7 @@ export default class GroupBoard extends Component {
     state = {
         apiResponse:" ",userid:'',firstname:'',lastname:'',organizationname:'',organizationid:'',isloggedin:'',
         image:'',imagefile:null,filechosen:false, preview:"",showallposts:false,curDT : new Date().toLocaleString(),
-        posts:[],details:[],selectedpostid:'',latitude:'0',longitude:'0',
+        posts:[],details:[],selectedpostid:'',latitude:'0',longitude:'0',selectedPosttype:"",
     }
     constructor(props){
 		super(props);
@@ -27,6 +27,7 @@ export default class GroupBoard extends Component {
         this.commentSend=this.commentSend.bind(this);
         this.chatsend=this.chatsend.bind(this);
         this.taglocation=this.taglocation.bind(this);
+        this.handleOptionChange=this.handleOptionChange.bind(this);
     }
     componentDidMount(){
         this.setState({userid:window.localStorage.getItem("userid")});
@@ -87,7 +88,12 @@ export default class GroupBoard extends Component {
         document.getElementById('img-file').click();
       }
       post(){ 
-        var postType = document.getElementById("post-type").value;
+        var postType = this.state.selectedPosttype;
+        if(postType==='emergency'){
+            postType=1
+        }else{
+            postType=2
+        }
         var postText = document.getElementById("post-text").value;
         let formdata = new FormData();
         formdata.append('image', this.state.imagefile);
@@ -97,7 +103,7 @@ export default class GroupBoard extends Component {
         formdata.append('organizationid',window.localStorage.getItem("orgid"));
         formdata.append('organizationname',window.localStorage.getItem("org"));
         formdata.append('lat', this.state.latitude);
-    formdata.append('long', this.state.longitude);
+        formdata.append('long', this.state.longitude);
         axios.post(address+'grouppost',formdata)
         .then(res=>{
             window.location.reload();
@@ -198,6 +204,12 @@ like(e){
             window.location.reload();
         });
     }
+    
+handleOptionChange(e) {
+    this.setState({
+        selectedPosttype:e.currentTarget.value
+    })
+}
     logout(){
         window.localStorage.clear();
         window.location.reload();
@@ -207,15 +219,17 @@ render(){
     return(
         <>
         <div className='container-fluid p-0 m-0'>
-            <div className='group-rows sticky-nav'>
-                <ul className='navbar'>
-                    <div className='container pt-2 pb-2'>
-                        <li><a className='brand' href="#icon">FCF</a></li>
-                    <li><a  className="nav-icon" href="/dashboard"><i className='fa fa-home'></i></a></li>
+            <div className='group-rows sticky-nav bg-1'>
+            <div className='container pt-2 pb-2'>
+                <a className='brand' href="#icon">FCF</a>
+                <ul className='nav-menu'>
+                    <li><a className="nav-icon" href="/dashboard"><i className='fa fa-home'></i>Home</a></li>
+                    <li><a className='nav-icon selected' href="/groups"><i className="fa fa-group"></i>{this.state.organizationname}</a></li>
+                    {/* <li><a className="nav-icon" ><i className="fa fa-user"></i>Volunteer</a></li> */}
+                    <li><a className="nav-icon" onClick={this.logout} id="logoutbtn"><i className='fa fa-power-off'></i>Logout</a></li>
+                    </ul>
 
-                    </div>
-                    
-                </ul>
+                </div>
             </div>  
            
             <div className="container">
@@ -237,11 +251,6 @@ render(){
                             
                         </div>
                         <hr/>
-                        
-
-                        <div className="logout">
-                            <button type="button"  onClick={this.logout} id="logoutbtn"><a>Logout</a></button>
-                        </div>
                     </div>
                 
                     <div className="col-md-6 center-pane mx-1">
@@ -254,20 +263,21 @@ render(){
                                 </div>
                             </div>
                             <div id="post-form" className='post-form'>
-                                <div className='form-group'>
-                                    <label>Post Type : </label>
-                                    <select name="post-type" className='post-type' id="post-type" defaultValue={0}>
-                                        <option value='0' disabled >Select Post Type</option>
-                                        <option value="1">Emergency</option>
-                                        <option value="2">Normal</option>
-                                    </select>
+                            <div className='form-group'>
+                            <label>Post Type : </label>
+                            <form>
+                                <div className="radio">
+                                    <label><input type="radio" id="post-type" value="emergency" checked={this.state.selectedPosttype=="emergency"} onChange={this.handleOptionChange} />Emergency</label>
+                                    <label><input type="radio" id="post-type" value="normal" checked={this.state.selectedPosttype=="normal"} onChange={this.handleOptionChange} />Normal</label>
                                 </div>
+                            </form>
+                            </div>
                                 <textarea className='post-text' id="post-text" type="text" rows="3" placeholder="write somethng .." ></textarea>
                                 
                                 <div className='uploads inline'>
                                 <p className='col-md-4 inline-block' id="post-image" onClick={this.uploadimage}>
                                         <i className='fa fa-camera' id='fa-camera' onClick={this.showPostformimage}></i>Images
-                                        <input type='file' id="img-file" name="imageUpload" className='d-none'onChange={this.filechange}/>  
+                                        <input type='file' id="img-file" name="imageUpload" accept='image/jpg, image/png, image/jpeg' className='d-none'onChange={this.filechange}/>  
                                     </p>
                                     <a className='col-md-4 inline-block location' onClick={this.taglocation}><i className='fa fa-map-marker'></i> Tag location</a>
                                 

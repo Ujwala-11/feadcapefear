@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
         connection.query("SELECT c.*, ud.* FROM comments c left join user_details ud on c.user_id=ud.user_id where post_id='"+postid+"';", (err, rows, fields) => {
         if (err)
         throw err;
-        console.log(rows)
+        
         rows.forEach(element => {      
             var rawdata =  fs.readFileSync(element.image,'base64');
             element.image = rawdata;
