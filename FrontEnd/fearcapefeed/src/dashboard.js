@@ -4,7 +4,6 @@ import {address} from './variables';
 
 import "./dashboard.css";
 import Admin from './admin';
-import userImage from "./resources/profilepic.jpg";
 import image from "./resources/hd-wallpaper-g6cdf55a9b_1920.jpg";
 
 export default class Dashboard extends Component {
