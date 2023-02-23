@@ -32,4 +32,4 @@ These are the Plugins used in the frontend and backend of this application. To r
 **Configurations :**
 Frontend : By default frontend is configure to run on PORT:4000 and you can change port in the file package.json in frontend/fearcapefeed
 Backend : By default backend is configure to run on PORT:2000 and you can change port in the file ./bin/www in backend/server.
-Database : For connecting your database to backed, go to dbconfig file in server and change your password.
+Database : For connecting your database to backed, go to dbconfig file in server and change your password and database name.
