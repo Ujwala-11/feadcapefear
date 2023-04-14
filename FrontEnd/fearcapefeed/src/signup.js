@@ -109,11 +109,11 @@ render(){
                                     {this.state.imageurl?
                                     <label className='image-div'>
                                         <img className="user-image" id="pic" src={this.state.imageurl} alt="login image"/>
-                                    <input id="image-file" type="file" className='d-none' onChange={this.preview}/>
+                                    <input id="image-file" type="file" accept='image/jpg, image/png, image/jpeg' className='d-none' onChange={this.preview}/>
                                 </label>
                                     :<label className='image-div'>
                                          <img className="user-image" id="pic" src={userImage} alt="login image"/>
-                                    <input id="image-file" type="file" className='d-none' onChange={this.preview}/>
+                                    <input id="image-file" type="file" accept='image/jpg, image/png, image/jpeg' className='d-none' onChange={this.preview}/>
                                 </label>
                                     }
                             </div>

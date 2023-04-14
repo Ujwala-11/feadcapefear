@@ -25,6 +25,7 @@ router.post('/', (req, res) => {
             lat:fields.lat,
             long:fields.long,
             userid: fields.userid,
+            imagetype: fields.imagetype,
         };
        
         var filename = files.image.originalFilename;
@@ -36,7 +37,7 @@ router.post('/', (req, res) => {
         fs.writeFile(newPath, rawData, function(err){
             connection.connect();
 
-        connection.query("INSERT INTO post(user_id,imageUpload,post_text,post_type,time_stamp,org_id,lat,longitude) VALUES('"+user.userid+"','"+newPath+"','"+user.posttext+"','"+user.posttype+"','"+value+"','"+0+"','"+user.lat+"','"+user.long+"')", (err, rows, fields) => {
+        connection.query("INSERT INTO post(user_id,imageUpload,post_text,post_type,time_stamp,org_id,lat,longitude,imagetype) VALUES('"+user.userid+"','"+newPath+"','"+user.posttext+"','"+user.posttype+"','"+value+"','"+0+"','"+user.lat+"','"+user.long+"','"+user.imagetype+"')", (err, rows, fields) => {
           
         if (err)
         throw err;

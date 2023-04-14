@@ -26,6 +26,7 @@ var uploadRouter = require('./routes/uploadpost');
 var uploadgrouppostRouter = require('./routes/uploadgrouppost');
 var selectusersRouter = require('./routes/selectusers');
 var chatdataRouter = require('./routes/chatdata');
+var chatdatamsgRouter = require('./routes/chatdatamsg');
 var getchatdataRouter = require('./routes/getchatdata');
 var commentdataRouter = require('./routes/commentdata');
 var getcommentdataRouter = require('./routes/getcommentdata');
@@ -37,8 +38,11 @@ var admindeclineRouter = require('./routes/admindecline');
 var getadminRouter = require('./routes/getadmin');
 var likepostrouter= require('./routes/likepost');
 var unlikepostrouter= require('./routes/unlikepost');
-
-
+var eventsRouter = require("./routes/createevents");
+var eventsmsgRouter = require("./routes/createeventsmsg");
+var uploadeventsRouter = require('./routes/uploadevents');
+var intrestedeventrouter= require('./routes/intrested');
+var eventviewsrouter= require('./routes/geteventviews');
 
 var app = express();
 
@@ -64,6 +68,7 @@ app.use('/uploadpost',uploadRouter);
 app.use('/uploadgrouppost',uploadgrouppostRouter);
 app.use('/selectusers',selectusersRouter);
 app.use('/chatdata',chatdataRouter);
+app.use('/chatdatamsg',chatdatamsgRouter);
 app.use('/getchatdata',getchatdataRouter);
 app.use('/commentdata',commentdataRouter);
 app.use('/getcommentdata',getcommentdataRouter);
@@ -75,7 +80,11 @@ app.use('/admindecline',admindeclineRouter);
 app.use('/getadmin',getadminRouter);
 app.use('/likepost',likepostrouter);
 app.use('/unlikepost',unlikepostrouter);
-
+app.use('/createevents',eventsRouter);
+app.use('/createeventsmsg',eventsmsgRouter);
+app.use('/uploadevents',uploadeventsRouter);
+app.use('/intrested',intrestedeventrouter);
+app.use('/geteventviews',eventviewsrouter);
 
 
 // catch 404 and forward to error handler

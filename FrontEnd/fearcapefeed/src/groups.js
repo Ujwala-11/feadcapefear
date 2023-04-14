@@ -11,7 +11,8 @@ export default class GroupBoard extends Component {
     state = {
         apiResponse:" ",userid:'',firstname:'',lastname:'',organizationname:'',organizationid:'',isloggedin:'',
         image:'',imagefile:null,filechosen:false, preview:"",showallposts:false,curDT : new Date().toLocaleString(),
-        posts:[],details:[],selectedpostid:'',latitude:'0',longitude:'0',selectedPosttype:"",
+        posts:[],details:[],selectedpostid:'',latitude:'0',longitude:'0',selectedPosttype:"",videofile:null,
+        videochose:false,imagechoose:false,imagetype:null,
     }
     constructor(props){
 		super(props);
@@ -72,18 +73,34 @@ export default class GroupBoard extends Component {
         var bt=document.getElementById('plus-ic');
         if(el.classList.contains('show-post-form-image')){
             el.classList.remove('show-post-form-image');
-            bt.classList.remove('plus-to-cross');
         }else{
             el.classList.add('show-post-form-image');        }
     }   
     filechange(e){
-        var files= e.target.files[0];  
-        this.setState({
-            imagefile: files,
-            filechosen:true,
-            preview : URL.createObjectURL(e.target.files[0])
-        })
+        var files= e.target.files[0];
+        var extension = files.name.split(".").pop();
+        if (extension === 'mp4'){
+            this.setState({
+                imagefile: files,
+                videochose:true,
+                filechosen:true,
+                imagetype:1,
+                preview : URL.createObjectURL(files)
+            })
+            alert(this.state.preview);
+        }
+        else{
+            this.setState({
+                imagefile: files,
+                imagechose:true,
+                filechosen:true,
+                imagetype:0,
+                preview : URL.createObjectURL(files)
+            })
+            alert(this.state.preview);
+        }
       }
+    
       uploadimage(){
         document.getElementById('img-file').click();
       }
@@ -104,6 +121,7 @@ export default class GroupBoard extends Component {
         formdata.append('organizationname',window.localStorage.getItem("org"));
         formdata.append('lat', this.state.latitude);
         formdata.append('long', this.state.longitude);
+        formdata.append('imagetype', this.state.imagetype); 
         axios.post(address+'grouppost',formdata)
         .then(res=>{
             window.location.reload();
@@ -225,7 +243,7 @@ render(){
                 <ul className='nav-menu'>
                     <li><a className="nav-icon" href="/dashboard"><i className='fa fa-home'></i>Home</a></li>
                     <li><a className='nav-icon selected' href="/groups"><i className="fa fa-group"></i>{this.state.organizationname}</a></li>
-                    {/* <li><a className="nav-icon" ><i className="fa fa-user"></i>Volunteer</a></li> */}
+                    <li><a className="nav-icon" href="/volunteeres" ><i className="fa fa-user"></i>Volunteer</a></li>
                     <li><a className="nav-icon" onClick={this.logout} id="logoutbtn"><i className='fa fa-power-off'></i>Logout</a></li>
                     </ul>
 
@@ -276,16 +294,19 @@ render(){
                                 
                                 <div className='uploads inline'>
                                 <p className='col-md-4 inline-block' id="post-image" onClick={this.uploadimage}>
-                                        <i className='fa fa-camera' id='fa-camera' onClick={this.showPostformimage}></i>Images
-                                        <input type='file' id="img-file" name="imageUpload" accept='image/jpg, image/png, image/jpeg' className='d-none'onChange={this.filechange}/>  
+                                        <i className='fa fa-camera' id='fa-camera' onClick={this.showPostformimage}><span>Image/Video</span></i>
+                                        <input type='file' id="img-file" name="imageUpload" accept='image/jpg, image/png, image/jpeg,video/mp4' className='d-none'onChange={this.filechange}/>  
                                     </p>
                                     <a className='col-md-4 inline-block location' onClick={this.taglocation}><i className='fa fa-map-marker'></i> Tag location</a>
                                 
                                     <div className='post-btn col-md-4 inline-block'>
                                         <button className='post-btn bg-green' type='button' onClick={this.post} placeholder='create'><a>Post</a> </button>
                                     </div>
-                                    {!this.state.preview && <img src={''} height='0' width='0'/>} 
-                                    {this.state.preview && <img id="img-post" src={this.state.preview} />}
+                                    {!this.state.preview && <img src={''} height='0' width='0'/>}
+                                {this.state.preview && <a>
+                                    {!this.state.videochose && <img id="img-post" src={this.state.preview} />}
+                                    {this.state.videochose && <video id="img-post" controls src={this.state.preview} />}
+                                </a>}
                                 </div>
                             </div>
                         </div>
@@ -319,8 +340,8 @@ render(){
                                     daytext=daysint+" days ago";
                                 }
                                 post.likes?likes=post.likes:likes=0;
-                            post.userlike==1?isliked=true:isliked=false;
-                            locurl="https://www.google.com/maps/@"+post.lat+","+post.longitude+",15z"
+                                post.userlike==1?isliked=true:isliked=false;
+                                locurl="https://www.google.com/maps/@"+post.lat+","+post.longitude+",15z"
                                 if(this.state.showallposts==false){
                                     if(post.post_type==1){
                                         return<div className='post-pane'>
@@ -329,20 +350,20 @@ render(){
                                         </div>
                                             <div className='title'>
                                             <div className='image'>
-                                                <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
-                                            </div>
-                                            <div>
-                                                <h6>{post.firstname} {post.lastname}</h6>
-                                                <p>{daytext}</p> 
-                                            </div>
-                                            
+                                            <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
                                         </div>
-                                    <div className='content'>
-                                    <p>{post.post_text}</p>
-                                    <div className='post-image'>
-                                    <img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />
-        
+                                        <div>
+                                            <h6>{post.firstname} {post.lastname}</h6>
+                                            <p>{daytext}</p>
+                                        </div>
+                                        
                                     </div>
+                                <div className='content'>
+                                <p>{post.post_text}</p>
+                                <div className='post-image'>
+                                    {post.imagetype==1&&<video controls className="videoview" type="video/mp4" src={"data:video/mp4;base64,"+post.imageUpload}/>}
+                                    {post.imagetype==0&&<img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />}
+                                </div>
                                     </div>
                                     <div className='actions'>
                                         
@@ -379,9 +400,9 @@ render(){
                                     <div className='content'>
                                     <p>{post.post_text}</p>
                                     <div className='post-image'>
-                                    <img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />
-        
-                                    </div>
+                                    {post.imagetype==1&&<video controls className="videoview" type="video/mp4" src={"data:video/mp4;base64,"+post.imageUpload}/>}
+                                    {post.imagetype==0&&<img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />}
+                                </div>
                                     </div>
                                     <div className='actions'>
                                                                               

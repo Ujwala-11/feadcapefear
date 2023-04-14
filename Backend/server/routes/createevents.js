@@ -21,14 +21,13 @@ router.post('/', (req, res) => {
     form.parse(req,function(err, fields, files){
         const user = {
             posttext : fields.posttext,
-            posttype : fields.posttype,
-            userid: fields.userid,
+            enddate : fields.enddate,
+            endtime:fields.endtime,
             lat:fields.lat,
             long:fields.long,
-            orgid: fields.organizationid,
+            userid: fields.userid,
             imagetype: fields.imagetype,
         };
-
         var filename = files.image.originalFilename;
         var extension = filename.split(".").pop();
         var oldPath = files.image.filepath;
@@ -38,13 +37,12 @@ router.post('/', (req, res) => {
         fs.writeFile(newPath, rawData, function(err){
             connection.connect();
 
-        connection.query("INSERT INTO post(user_id,imageUpload,post_text,post_type,org_id,time_stamp,lat,longitude,imagetype) VALUES('"+user.userid+"','"+newPath+"','"+user.posttext+"','"+user.posttype+"','"+user.orgid+"','"+value+"','"+user.lat+"','"+user.long+"','"+user.imagetype+"')", (err, rows, fields) => {
+        connection.query("INSERT INTO events(user_id,imageUpload,event_text,time_stamp,lat,longitude,event_end_date,event_end_time,imagetype) VALUES('"+user.userid+"','"+newPath+"','"+user.posttext+"','"+value+"','"+user.lat+"','"+user.long+"','"+user.enddate+"','"+user.endtime+"','"+user.imagetype+"')", (err, rows, fields) => {
           
         if (err)
         throw err;
-        console.log(rows);
 
-        console.log('Data inserted successfully for '+user.userid);
+        console.log('Event with image inserted successfully for '+user.userid);
         res.send('post created')
         });
         connection.end();

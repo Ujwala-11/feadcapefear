@@ -11,7 +11,8 @@ export default class Dashboard extends Component {
         apiResponse:" ",userid:'',firstname:'',lastname:'',organizationname:'',organizationid:'',
         isloggedin:'',image:'',imagefile:null,filechosen:false, preview:"" ,posts:[],details:[],chats:[],
         userValue:'',userselected:false,selecteduserId:'',curDT : new Date().toLocaleString(),chatselected:false,
-        status:0,showallposts:false,selectedpostid:'',latitude:'0',longitude:'0',selectedPosttype:"",
+        status:0,showallposts:false,selectedpostid:'',latitude:'0',longitude:'0',selectedPosttype:"",videofile:null,
+        videochose:false,imagechoose:false,imagetype:null,
     }
     constructor(props){
 		super(props);
@@ -74,19 +75,35 @@ export default class Dashboard extends Component {
         var bt=document.getElementById('plus-ic');
         if(el.classList.contains('show-post-form-image')){
             el.classList.remove('show-post-form-image');
-            bt.classList.remove('plus-to-cross');
         }else{
             el.classList.add('show-post-form-image');
         }
     }   
-filechange(e){
-    var files= e.target.files[0];  
-    this.setState({
-        imagefile: files,
-        filechosen:true,
-        preview : URL.createObjectURL(e.target.files[0])
-    })
-  }
+    filechange(e){
+        var files= e.target.files[0];
+        var extension = files.name.split(".").pop();
+        if (extension === 'mp4'){
+            this.setState({
+                imagefile: files,
+                videochose:true,
+                filechosen:true,
+                imagetype:1,
+                preview : URL.createObjectURL(files)
+            })
+            alert(this.state.preview);
+        }
+        else{
+            this.setState({
+                imagefile: files,
+                imagechose:true,
+                filechosen:true,
+                imagetype:0,
+                preview : URL.createObjectURL(files)
+            })
+            alert(this.state.preview);
+        }
+      }
+    
   uploadimage(){
     document.getElementById('img-file').click();
   }
@@ -107,6 +124,7 @@ filechange(e){
     formdata.append('organizationname',window.localStorage.getItem("org"));
     formdata.append('lat', this.state.latitude);
     formdata.append('long', this.state.longitude);
+    formdata.append('imagetype', this.state.imagetype); 
     axios.post(address+'createpost',formdata)
     .then(res=>{
         window.location.reload();
@@ -251,7 +269,7 @@ render(){
                 <ul className='nav-menu'>
                     <li><a className="nav-icon selected" href="/dashboard"><i className='fa fa-home'></i>Home</a></li>
                     <li><a className='nav-icon' href="/groups"><i className="fa fa-group"></i>{this.state.organizationname}</a></li>
-                    {/* <li><a className="nav-icon" ><i className="fa fa-user"></i>Volunteer</a></li> */}
+                    <li><a className="nav-icon" href="/volunteeres"><i className="fa fa-user"></i>Volunteer</a></li>
                     <li><a className="nav-icon" onClick={this.logout} id="logoutbtn"><i className='fa fa-power-off'></i>Logout</a></li>
                     </ul>
 
@@ -309,16 +327,19 @@ render(){
 
                             <div className='uploads inline' id='uploads' >
                                 <p className='col-md-4 inline-block' id="post-image" onClick={this.uploadimage}>
-                                    <i className='fa fa-camera' id='fa-camera' onClick={this.showPostformimage}></i>Image
-                                    <input type='file' id="img-file" name="imageUpload" accept='image/jpg, image/png, image/jpeg' className='d-none'onChange={this.filechange}/>  
+                                    <i className='fa fa-camera' id='fa-camera' onClick={this.showPostformimage}><span>Image/Video</span></i>
+                                    <input type='file' id="img-file" name="imageUpload" accept='image/jpg, image/png, image/jpeg,video/mp4' className='d-none'onChange={this.filechange}/>  
                                 </p>
                                 <a className='col-md-4 inline-block location' onClick={this.taglocation}><i className='fa fa-map-marker'></i> Tag location</a>
                             
                                 <div className='post-btn col-md-4 inline-block'>
                                     <button className='post-btn bg-green' type='button' onClick={this.post} placeholder='create'><a>Post</a> </button>
                                 </div>
-                                {!this.state.preview && <img src={''} height='0' width='0'/>} 
-                                {this.state.preview && <img id="img-post" src={this.state.preview} />}
+                                {!this.state.preview && <img src={''} height='0' width='0'/>}
+                                {this.state.preview && <a>
+                                    {!this.state.videochose && <img id="img-post" src={this.state.preview} />}
+                                    {this.state.videochose && <video id="img-post" controls src={this.state.preview} />}
+                                </a>}
                             </div>
                         </div>
                     </div>
@@ -375,22 +396,20 @@ render(){
                                 <div className='content'>
                                 <p>{post.post_text}</p>
                                 <div className='post-image'>
-                                <img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />
-    
+                                    {post.imagetype==1&&<video controls className="videoview" type="video/mp4" src={"data:video/mp4;base64,"+post.imageUpload}/>}
+                                    {post.imagetype==0&&<img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />}
                                 </div>
                                 </div>
                                 <div className='actions'>
                                 
-                                        
                                 </div>
                                 
                                 <div className='commenttext'>
-                                        
-                                {isliked==true&&<button className='post_likes liked' type='button' data-pid={post.postid} onClick={this.unlike} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
-                                        {isliked!=true&&<button className='post_likes' type='button' data-pid={post.postid} onClick={this.like} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
-                                        <input type="text"  id="commentsend" placeholder="Comment Here..." />
-                                        <button className='commentsend bg-green' type='button' data-postid={post.postid} onClick={this.commentSend} ><i className="fa fa-send" ></i> </button>
-                                        <button className='comment' type='button' onClick={this.selectPosts} data-postid={post.postid}><i className='fa fa-comments'></i></button>    
+                                    {isliked==true&&<button className='post_likes liked' type='button' data-pid={post.postid} onClick={this.unlike} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                    {isliked!=true&&<button className='post_likes' type='button' data-pid={post.postid} onClick={this.like} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                    <input type="text"  id="commentsend" placeholder="Comment Here..." />
+                                    <button className='commentsend bg-green' type='button' data-postid={post.postid} onClick={this.commentSend} ><i className="fa fa-send" ></i> </button>
+                                    <button className='comment' type='button' onClick={this.selectPosts} data-postid={post.postid}><i className='fa fa-comments'></i></button>    
                                 </div>
                                 <div>
                                     {this.state.selectedpostid==post.postid &&
@@ -417,8 +436,8 @@ render(){
                                 <div className='content'>
                                 <p>{post.post_text}</p>
                                 <div className='post-image'>
-                                <img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />
-    
+                                    {post.imagetype==1&&<video controls className="videoview" type="video/mp4" src={"data:video/mp4;base64,"+post.imageUpload}/>}
+                                    {post.imagetype==0&&<img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />}    
                                 </div>
                                 </div>
                                 <div className='actions'>
@@ -426,11 +445,11 @@ render(){
                                 </div>
                                 <div className='commenttext'>
                                     {isliked==true&&<button className='post_likes liked' type='button' data-pid={post.postid} onClick={this.unlike} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
-                                        {isliked!=true&&<button className='post_likes' type='button' data-pid={post.postid} onClick={this.like} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
-                                            <input type="text"  id="commentsend" placeholder="Comment Here..." />
-                                            <button className='commentsend bg-green' type='button' data-postid={post.postid} onClick={this.commentSend} ><i className="fa fa-send" ></i> </button>
-                                            <button className='comment' type='button' onClick={this.selectPosts} data-postid={post.postid}><i className='fa fa-comments'></i></button>
-                                    </div>
+                                    {isliked!=true&&<button className='post_likes' type='button' data-pid={post.postid} onClick={this.like} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                    <input type="text"  id="commentsend" placeholder="Comment Here..." />
+                                    <button className='commentsend bg-green' type='button' data-postid={post.postid} onClick={this.commentSend} ><i className="fa fa-send" ></i> </button>
+                                    <button className='comment' type='button' onClick={this.selectPosts} data-postid={post.postid}><i className='fa fa-comments'></i></button>
+                                </div>
                                 <div>
                                     {this.state.selectedpostid==post.postid &&
                                         <div>
@@ -471,7 +490,7 @@ render(){
                         </ul>
                     </div>
                     {!this.state.userselected && <p id="zero-users">Select users to chat</p>} 
-                    <div className={'chat-section visible-'+this.state.userselected}>
+                    <div id="chat-box-min" className={'chat-section visible-'+this.state.userselected}>
                         <div className='users bg-green'>
                             <h3 className='chat-title '>
                                 <img id="selected_image" className='chat-title-img '/>
@@ -499,13 +518,16 @@ class UserChat extends Component{
         curDT : new Date().toLocaleString(),
         count:0,
         intervalId:0,
-        timerId:null
+        timerId:null,image:"", imagefiles:null, preview:"", filechosen:false,videofile:null,
+        videochose:false,imagechoose:false,imagetype:null,
     }
     constructor(props){
 		super(props);
         this.callChat=this.callChat.bind(this);
         this.chatsend=this.chatsend.bind(this);
         this.refreshchat=this.refreshchat.bind(this);
+        this.uploadimage=this.uploadimage.bind(this);
+        this.changefile=this.changefile.bind(this);   
     }
     componentDidMount(){
         this.callChat(this.props.suId);
@@ -519,48 +541,136 @@ class UserChat extends Component{
         .then(res =>res.json())
         .then(res=> this.setState({ chats: res, recuid:recid}));
     }
+    uploadimage(){
+        document.getElementById('image-file').click();
+    }
+    changefile(e){
+        var files = document.getElementById('image-file').files[0]
+        var extension = files.name.split(".").pop();
+        if (extension === 'mp4'){
+            this.setState({
+                imagefiles: files,
+                videochose:true,
+                filechosen:true,
+                imagetype:1,
+                preview : URL.createObjectURL(files)
+            })
+            alert(this.state.preview);
+        }
+        else{
+            this.setState({
+                imagefiles: files,
+                imagechose:true,
+                filechosen:true,
+                imagetype:0,
+                preview : URL.createObjectURL(files)
+            })
+            alert(this.state.preview);
+        }
+    }
     chatsend(){
         var chat = document.getElementById("chatsend").value;
         var sender = window.localStorage.getItem("userid");
         var reciever = this.props.suId;
         var date = this.state.curDT;
-        let formdata = new FormData();
-        formdata.append('chatsend', chat);
-        formdata.append('sender',sender);
-        formdata.append('reciever',reciever);
-        formdata.append("timestamp",date);
-        axios.post(address+'chatdata',formdata)
-        .then(res=>{
-            document.getElementById("chatsend").value="";
-            this.callChat(reciever);
-        });
+        var type ;
+        if(this.state.imagefiles==null){
+            type = 0;
+            let formdata = new FormData();
+            formdata.append('chatsend', chat);
+            formdata.append('sender',sender);
+            formdata.append('reciever',reciever);
+            formdata.append("timestamp",date);
+            formdata.append("type",type);
+            axios.post(address+'chatdatamsg',formdata)
+            .then(res=>{
+                document.getElementById("chatsend").value="";
+                this.callChat(reciever);
+            });
+        }
+        else{
+            type = 1;
+            let formdata = new FormData();
+            formdata.append('image',this.state.imagefiles);
+            formdata.append('chatsend', chat);
+            formdata.append('sender',sender);
+            formdata.append('reciever',reciever);
+            formdata.append("timestamp",date);
+            formdata.append("type",type);
+            formdata.append('imagetype', this.state.imagetype);
+            axios.post(address+'chatdata',formdata)
+            .then(res=>{
+                document.getElementById("chatsend").value="";
+                this.callChat(reciever);
+            });
+        }
+        
     }
     refreshchat(){
-        this.callChat(this.props.suId);
+        // this.callChat(this.props.suId);
+        var el = document.getElementById('chat-box-min');
+        var el2=document.getElementById('ps-bar')
+        // var bt=document.getElementById('refresh');
+        if(el.classList.contains('minimize-chat')){
+            el.classList.remove('minimize-chat');
+            el2.classList.remove('d-none')
+        }else{
+            el.classList.add('minimize-chat');
+            el2.classList.add('d-none');
+        }
     }
     
     render(){
         return <>
-        <div className='chat-box'>
-             <a className='refresh' onClick={this.refreshchat}><i className='fa fa-refresh'></i></a>
+        <div className='chat-box-min'>
+            <div className='chat-box'>
+             <a className='refresh' id='refresh' onClick={this.refreshchat}><i className='fa fa-minus'></i></a>
             <ul className='list-none pl-15'>
-                {this.state.chats.map((cht)=>{
+            {this.state.chats.map((cht)=>{
                     if(cht.from_user==window.localStorage.getItem("userid")){
-                        return <li className='from-message'>{cht.message} <span>{cht.time_stamp}</span></li>}
+                        if(cht.type==0){
+                            return <li className='from-message'>{cht.message} <span>{cht.time_stamp}</span></li>
+                        }else{
+                            return <li className='from-message'>
+                                {cht.imagetype==1&&<video controls id='image-chat' type="video/mp4" src={"data:video/mp4;base64,"+cht.chatimage}/>}
+                                {cht.imagetype==0&&<img id='image-chat' src={"data:image/gif;base64,"+cht.chatimage}/>}
+                                {cht.message}<span>{cht.time_stamp}</span>
+                                </li>
+                        }
+                    }
                     else{
-                        return <li className='to-message'>{cht.message} <span>{cht.time_stamp}</span></li>
+                        if(cht.type==1){
+                            return <li className='to-message'>
+                                {cht.imagetype==1&&<video controls id='image-chat' type="video/mp4" src={"data:video/mp4;base64,"+cht.chatimage}/>}
+                                {cht.imagetype==0&&<img  id='image-chat'src={"data:image/gif;base64,"+cht.chatimage}/>}
+                                {cht.message} <span>{cht.time_stamp}</span>
+                            </li>
+                        }else{
+                            return <li className='to-message'>{cht.message} <span>{cht.time_stamp}</span></li>
+
+                        }
                     }
                 })}
-                
-            </ul></div>
-            <div className='post-bar'>
-                            <div className='post-text-bar'>
-                                <input type="text" placeholder="Type Here.." id="chatsend"/>
-                                <div >
-                                    <button className='post-message-btn bg-green' type='button' onClick={this.chatsend} ><i className="fa fa-send" ></i> </button>
-                                </div>
-                            </div>  
-                        </div>
+                </ul>
+                {!this.state.preview && <img src={''} height='0' width='0'/>} 
+                {this.state.preview && <a>
+                    {!this.state.videochose && <img id="chat-image-post" src={this.state.preview} />}
+                    {this.state.videochose && <video id="chat-image-post" controls src={this.state.preview} />}
+                </a>}
+            </div>
+            <div className='post-bar' id="ps-bar">
+                <div className='post-text-bar'>
+                <p id="post-image" onClick={this.uploadimage} ><i className='cam fa fa-camera' id='fa-fa-camera' ></i>
+                        <input type='file' id="image-file" name="imageUpload" accept='image/jpg, image/png, image/jpeg,video/*' className='d-none' onChange={this.changefile}/>
+
+                    </p>
+                    <input type="text" placeholder="Type Here.." id="chatsend"/>
+                    <div >
+                        <button className='post-message-btn bg-green' type='button' onClick={this.chatsend} ><i className="fa fa-send" ></i> </button>
+                    </div>
+                </div>  
+            </div>
+        </div>
         </>
     }
 }

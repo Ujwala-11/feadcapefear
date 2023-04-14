@@ -6,13 +6,14 @@ body{
 }
 .brand{
     background-color: #fff;
-    padding: 16px;
+    padding: 12px 14px;
     border-radius: 50%;
     font-size: 27px;
     font-weight: bold;
     position:relative;
-    top: 10px;
+    top: 6px;
     color:#008f98;
+    margin-left: 20px;
 }
 .brand:hover{
     color:#008f98;
@@ -35,7 +36,7 @@ text-decoration: none;
 
 input[type=text], input[type=password], select {   
     width: 77%;   
-    margin: 5px 0;  
+    margin: 5px 2px;  
     padding: 15px 24px;   
     display: inline-block;
     border:none;   
@@ -76,6 +77,7 @@ input[type=text], input[type=password], select {
   .nav-menu{
     display: inline-flex;
     float: right;
+    margin: 0 0 10px 0;
   }
   .nav-menu li{
     width: 90px;
@@ -172,12 +174,13 @@ ul.profile-content li{
 }
 .post-image img{
     width: 100%;
+    height: 100%;
 }
 .actions{
     display: inline-flex;
     width: 100%;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 1px;
     padding: 0 15px;
     border-top: 1px solid #aaa;
 }
@@ -322,7 +325,7 @@ ul.profile-content li{
     display: inline-flex;
 }
 .chat-box{
-    height: 368px;
+    height: 420px;
     overflow-y: scroll;
     scroll-behavior: smooth;
     overflow-x:hidden;
@@ -364,7 +367,7 @@ ul.profile-content li{
     height: 45px;
     border-radius: 50%;
     padding: 5px 10px;
-    margin-left: 8px;
+    margin: 10px 15px 0 7px;
 }
 
 .uploads p{
@@ -402,6 +405,9 @@ ul.profile-content li{
 .show-post-form{
     height: 228px;
 }
+.show-post-form-vol{
+    height: 230px;
+}
 .uploads{
     height: 0;
     overflow: hidden;
@@ -409,6 +415,9 @@ ul.profile-content li{
 }
 .show-post-form-image{
     height:700px;
+}
+.show-post-form-image-vol{
+    height:695px;
 }
 #fa-camera i{
     transition: all ease-in-out .4s; 
@@ -477,9 +486,10 @@ li.to-message{
 }
 .post-bar{
     border-top: 1px solid #bbb;
+    background-color: white;
     position: absolute;
-    bottom: 0;
-    left:5px;
+    border-radius: 0 0 20px 20px;
+    bottom: 0px;
 }
 .from-message span{
     display: block;
@@ -502,7 +512,11 @@ li.to-message{
 .user-post {
     display: none;
 }
-
+.uploads span {
+    font-size: 16px;
+    margin: 0 0 0 4px;
+    font-weight: 400;
+}
 #img-post{
     height:450px;
     width: 450px;
@@ -614,8 +628,10 @@ li.to-message{
  padding:5px;
 }
 .image-div .user-image-img {
-    max-height: 150px;
+    height: 150px;
     width: 150px;
+    overflow: hidden;
+    border-radius: 50%;
 }
 .tab-pane{
     background-color: #ccc;
@@ -641,14 +657,15 @@ color: #eee;
 
 .refresh {
     position: absolute;
-    right: 15px;
-    margin-top: -53px;
-    font-size: 20px;
+    right: 20px;
+    margin-top: -51px;
+    font-size: 18px;
     font-weight: 300;
     cursor: pointer;
     z-index: 2;
     color: #fff!important;
 }
+
 table, th {
     border:1px solid black;
     padding: 14px 30px;
@@ -692,4 +709,136 @@ table, th {
 }
 .location_marker a i{
     margin: auto;
+}
+#fa-fa-camera{
+    height: 40px;
+    width: 45Px;
+    font-size: 20px;
+    margin: 12px 0 0 0!important;
+    border-radius: 50%;
+}
+.cam{
+    padding:12px 8px 0 13px;
+}
+.chat-image{
+    height: 400px;
+}
+.chat-box{
+    transition: height ease .5s;
+}
+
+#chat-image-post{
+    height: 150px;
+    width:100%
+}
+#image-chat{
+    height:150px;
+    width: 170px;
+    margin: 0 0 0 -5px;
+    border-radius: 10px;
+}
+.event_count{
+    background-color: #87928f !important;
+    border-radius: 10px;
+    color: #ccc;
+    margin: 6px 6px 0 0px;
+    padding: 5px 14px;
+    font-size: 15px;
+    position: relative;
+}
+.event_count span{
+    display: block;
+}
+.event_count.liked {
+    background-color: #008f98!important;
+    color: #fff;
+}
+.event_comment{
+    background-color: #00a880 !important;
+    color: #fff;
+    margin: 7px 0 0 0;
+    float: right;
+    padding: 12px 15px;
+    font-size: 17px;
+    border-radius: 10px;
+}
+.view_comments{
+    background-color: #ddd;
+    margin: 5px 0 0 0;
+    border-radius: 12px;
+    padding: 15px 8px 1px 8px;
+    align-self: center;
+    text-align: -webkit-left;
+}
+.view_image{
+    width: 30px;
+    height: 30px;
+    border-radius: 30%;
+    overflow: hidden;
+}
+.view_image img {
+    width: inherit;
+    height:inherit;
+    border-radius: 50%;
+}
+.view_when{
+    color: #888;
+    font-weight: 400;
+    font-size: 12px;
+    margin: 7px 0 0 0;
+    float: right;
+}
+.list-none-view {
+    list-style: none;
+    display: block;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.form-control {
+    display: inline-flex;
+    margin: -6px 0 0 0px;
+}
+label {
+    display: inline-flex;
+    margin-bottom: 0.5rem;
+}
+.inline-flex{
+    display: inline-flex;
+}
+.end-date-time{
+    margin:0 0 -6px -16px;
+}
+#appt {
+    padding: 6px 16px;
+    margin: -6px 0 0 0px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+.end_btn{
+    padding: 8px 10px;
+}
+.meettime{
+    margin:0;
+}
+.videoview{
+    height: 345px;
+    width: 100%;
+}
+.chat-box-min{
+    height: 400px;
+}
+.hide-chat-box-min{
+    height: 0;
+    overflow: hidden;
+}
+.minimize-chat{
+    height: 68px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transition: height ease .2s;
+}
+.minimize-chat #ps-bar{
+    display: none;
 }

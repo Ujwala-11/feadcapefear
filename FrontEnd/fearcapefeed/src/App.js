@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Login from './login';
 import Signup from './signup';
 import Dashboard from './dashboard';
+import Volunteer from './volunteeres';
 import Admin from './admin';
 import GroupBoard from './groups';
 
@@ -19,6 +20,7 @@ class App extends Component {
 				<Route exact path='/' element={<Login />} />
 				<Route path='/signup' element={<Signup/>} />
 				<Route path='/dashboard' element={<Dashboard/>} />
+				<Route path='/volunteeres' element={<Volunteer/>} />
 				<Route path='/groups' element={<GroupBoard/>} />
         		<Route path='/admin' element={<Admin/>} />
 			</Routes>
