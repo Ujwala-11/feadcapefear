@@ -112,21 +112,38 @@ export default class GroupBoard extends Component {
             postType=2
         }
         var postText = document.getElementById("post-text").value;
-        let formdata = new FormData();
-        formdata.append('image', this.state.imagefile);
-        formdata.append('posttype', postType);
-        formdata.append('posttext', postText);
-        formdata.append('userid',window.localStorage.getItem("userid"));
-        formdata.append('organizationid',window.localStorage.getItem("orgid"));
-        formdata.append('organizationname',window.localStorage.getItem("org"));
-        formdata.append('lat', this.state.latitude);
-        formdata.append('long', this.state.longitude);
-        formdata.append('imagetype', this.state.imagetype); 
-        axios.post(address+'grouppost',formdata)
-        .then(res=>{
-            window.location.reload();
-        });
-    }chatsend(){
+        if(this.state.filechosen==false){
+            let formdata = new FormData();
+            formdata.append('posttype', postType);
+            formdata.append('posttext', postText);
+            formdata.append('userid',window.localStorage.getItem("userid"));
+            formdata.append('organizationid',window.localStorage.getItem("orgid"));
+            formdata.append('organizationname',window.localStorage.getItem("org"));
+            formdata.append('lat', this.state.latitude);
+            formdata.append('long', this.state.longitude);
+            axios.post(address+'grouppostmsg',formdata)
+            .then(res=>{
+                window.location.reload();
+            });
+        }
+        else{
+            let formdata = new FormData();
+            formdata.append('image', this.state.imagefile);
+            formdata.append('posttype', postType);
+            formdata.append('posttext', postText);
+            formdata.append('userid',window.localStorage.getItem("userid"));
+            formdata.append('organizationid',window.localStorage.getItem("orgid"));
+            formdata.append('organizationname',window.localStorage.getItem("org"));
+            formdata.append('lat', this.state.latitude);
+            formdata.append('long', this.state.longitude);
+            formdata.append('imagetype', this.state.imagetype); 
+            axios.post(address+'grouppost',formdata)
+            .then(res=>{
+                window.location.reload();
+            });
+        }   
+    }
+    chatsend(){
         var chat = document.getElementById("chatsend").value;
         var sender = this.state.userid;
         var orgid = window.localStorage.getItem("orgid");
@@ -342,86 +359,163 @@ render(){
                                 post.likes?likes=post.likes:likes=0;
                                 post.userlike==1?isliked=true:isliked=false;
                                 locurl="https://www.google.com/maps/@"+post.lat+","+post.longitude+",15z"
-                                if(this.state.showallposts==false){
-                                    if(post.post_type==1){
-                                        return<div className='post-pane'>
-                                            <div className='location_marker'>
-                                            <a target="_blank" href={locurl}><i className='fa fa-map-marker'></i></a>
-                                        </div>
-                                            <div className='title'>
-                                            <div className='image'>
-                                            <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
-                                        </div>
-                                        <div>
-                                            <h6>{post.firstname} {post.lastname}</h6>
-                                            <p>{daytext}</p>
-                                        </div>
-                                        
-                                    </div>
-                                <div className='content'>
-                                <p>{post.post_text}</p>
-                                <div className='post-image'>
-                                    {post.imagetype==1&&<video controls className="videoview" type="video/mp4" src={"data:video/mp4;base64,"+post.imageUpload}/>}
-                                    {post.imagetype==0&&<img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />}
-                                </div>
-                                    </div>
-                                    <div className='actions'>
-                                        
-                                    </div>
-                                    <div className='commenttext'>
-                                    {isliked==true&&<button className='post_likes liked' type='button' data-pid={post.postid} onClick={this.unlike} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
-                                        {isliked!=true&&<button className='post_likes' type='button' data-pid={post.postid} onClick={this.like} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
-                                            <input type="text"  id="commentsend" placeholder="Comment Here..." />
-                                            <button className='commentsend bg-green' type='button' data-postid={post.postid} onClick={this.commentSend} ><i className="fa fa-send" ></i> </button>
-                                            <button className='comment' type='button' onClick={this.selectPosts} data-postid={post.postid}><i className='fa fa-comments'></i></button>
-                                    </div>
-                                    <div>
-                                        {this.state.selectedpostid==post.postid &&
-                                            <div>
-                                                <PostComments key={this.state.selectedpostid} SPId={this.state.selectedpostid}/>
+                                if(post.imageUpload!=null){
+                                    if(this.state.showallposts==false){
+                                        if(post.post_type==1){
+                                            return<div className='post-pane'>
+                                                <div className='location_marker'>
+                                                <a target="_blank" href={locurl}><i className='fa fa-map-marker'></i></a>
                                             </div>
-                                        }
-                                    </div>
-                                </div>}
-                                }else{
-                                    return<div className='post-pane'>
-                                        <div className='location_marker'>
-                                            <a target="_blank" href={locurl}><i className='fa fa-map-marker'></i></a>
-                                        </div>
-                                            <div className='title'>
-                                            <div className='image'>
+                                                <div className='title'>
+                                                <div className='image'>
                                                 <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
                                             </div>
                                             <div>
-                                                <h6 >{post.firstname} {post.lastname}</h6>
+                                                <h6>{post.firstname} {post.lastname}</h6>
                                                 <p>{daytext}</p>
                                             </div>
+                                            
                                         </div>
                                     <div className='content'>
                                     <p>{post.post_text}</p>
                                     <div className='post-image'>
-                                    {post.imagetype==1&&<video controls className="videoview" type="video/mp4" src={"data:video/mp4;base64,"+post.imageUpload}/>}
-                                    {post.imagetype==0&&<img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />}
-                                </div>
+                                        {post.imagetype==1&&<video controls className="videoview" type="video/mp4" src={"data:video/mp4;base64,"+post.imageUpload}/>}
+                                        {post.imagetype==0&&<img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />}
                                     </div>
-                                    <div className='actions'>
-                                                                              
-                                    </div>
-                                    <div className='commenttext'>
-                                    {isliked==true&&<button className='post_likes liked' type='button' data-pid={post.postid} onClick={this.unlike} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
-                                        {isliked!=true&&<button className='post_likes' type='button' data-pid={post.postid} onClick={this.like} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
-                                            <input type="text"  id="commentsend" placeholder="Comment Here..." />
-                                            <button className='commentsend bg-green' type='button' data-postid={post.postid} onClick={this.commentSend} ><i className="fa fa-send" ></i> </button>
-                                            <button className='comment' type='button' onClick={this.selectPosts} data-postid={post.postid}><i className='fa fa-comments'></i></button>
-                                    </div>
-                                    <div>
-                                        {this.state.selectedpostid==post.postid &&
-                                            <div>
-                                                <PostComments key={this.state.selectedpostid} SPId={this.state.selectedpostid}/>
+                                        </div>
+                                        <div className='actions'>
+                                            
+                                        </div>
+                                        <div className='commenttext'>
+                                        {isliked==true&&<button className='post_likes liked' type='button' data-pid={post.postid} onClick={this.unlike} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                            {isliked!=true&&<button className='post_likes' type='button' data-pid={post.postid} onClick={this.like} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                                <input type="text"  id="commentsend" placeholder="Comment Here..." />
+                                                <button className='commentsend bg-green' type='button' data-postid={post.postid} onClick={this.commentSend} ><i className="fa fa-send" ></i> </button>
+                                                <button className='comment' type='button' onClick={this.selectPosts} data-postid={post.postid}><i className='fa fa-comments'></i></button>
+                                        </div>
+                                        <div>
+                                            {this.state.selectedpostid==post.postid &&
+                                                <div>
+                                                    <PostComments key={this.state.selectedpostid} SPId={this.state.selectedpostid}/>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>}
+                                    }else{
+                                        return<div className='post-pane'>
+                                            <div className='location_marker'>
+                                                <a target="_blank" href={locurl}><i className='fa fa-map-marker'></i></a>
                                             </div>
-                                        }
+                                                <div className='title'>
+                                                <div className='image'>
+                                                    <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
+                                                </div>
+                                                <div>
+                                                    <h6 >{post.firstname} {post.lastname}</h6>
+                                                    <p>{daytext}</p>
+                                                </div>
+                                            </div>
+                                        <div className='content'>
+                                        <p>{post.post_text}</p>
+                                        <div className='post-image'>
+                                        {post.imagetype==1&&<video controls className="videoview" type="video/mp4" src={"data:video/mp4;base64,"+post.imageUpload}/>}
+                                        {post.imagetype==0&&<img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />}
                                     </div>
-                                </div>
+                                        </div>
+                                        <div className='actions'>
+                                                                                
+                                        </div>
+                                        <div className='commenttext'>
+                                        {isliked==true&&<button className='post_likes liked' type='button' data-pid={post.postid} onClick={this.unlike} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                            {isliked!=true&&<button className='post_likes' type='button' data-pid={post.postid} onClick={this.like} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                                <input type="text"  id="commentsend" placeholder="Comment Here..." />
+                                                <button className='commentsend bg-green' type='button' data-postid={post.postid} onClick={this.commentSend} ><i className="fa fa-send" ></i> </button>
+                                                <button className='comment' type='button' onClick={this.selectPosts} data-postid={post.postid}><i className='fa fa-comments'></i></button>
+                                        </div>
+                                        <div>
+                                            {this.state.selectedpostid==post.postid &&
+                                                <div>
+                                                    <PostComments key={this.state.selectedpostid} SPId={this.state.selectedpostid}/>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    }
+                                }else{
+                                    if(this.state.showallposts==false){
+                                        if(post.post_type==1){
+                                            return<div className='post-pane'>
+                                                <div className='location_marker'>
+                                                <a target="_blank" href={locurl}><i className='fa fa-map-marker'></i></a>
+                                            </div>
+                                                <div className='title'>
+                                                <div className='image'>
+                                                <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
+                                            </div>
+                                            <div>
+                                                <h6>{post.firstname} {post.lastname}</h6>
+                                                <p>{daytext}</p>
+                                            </div>
+                                            
+                                        </div>
+                                        <div className='content'>
+                                            <p>{post.post_text}</p>
+                                        </div>
+                                        <div className='actions'>
+                                            
+                                        </div>
+                                        <div className='commenttext'>
+                                            {isliked==true&&<button className='post_likes liked' type='button' data-pid={post.postid} onClick={this.unlike} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                            {isliked!=true&&<button className='post_likes' type='button' data-pid={post.postid} onClick={this.like} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                                <input type="text"  id="commentsend" placeholder="Comment Here..." />
+                                                <button className='commentsend bg-green' type='button' data-postid={post.postid} onClick={this.commentSend} ><i className="fa fa-send" ></i> </button>
+                                                <button className='comment' type='button' onClick={this.selectPosts} data-postid={post.postid}><i className='fa fa-comments'></i></button>
+                                        </div>
+                                        <div>
+                                            {this.state.selectedpostid==post.postid &&
+                                                <div>
+                                                    <PostComments key={this.state.selectedpostid} SPId={this.state.selectedpostid}/>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>}
+                                    }else{
+                                        return<div className='post-pane'>
+                                            <div className='location_marker'>
+                                                <a target="_blank" href={locurl}><i className='fa fa-map-marker'></i></a>
+                                            </div>
+                                                <div className='title'>
+                                                <div className='image'>
+                                                    <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
+                                                </div>
+                                                <div>
+                                                    <h6 >{post.firstname} {post.lastname}</h6>
+                                                    <p>{daytext}</p>
+                                                </div>
+                                            </div>
+                                        <div className='content'>
+                                        <p>{post.post_text}</p>
+                                        
+                                        </div>
+                                        <div className='actions'>
+                                                                                
+                                        </div>
+                                        <div className='commenttext'>
+                                        {isliked==true&&<button className='post_likes liked' type='button' data-pid={post.postid} onClick={this.unlike} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                            {isliked!=true&&<button className='post_likes' type='button' data-pid={post.postid} onClick={this.like} ><i className="fa fa-thumbs-up" ></i>{likes}</button>}
+                                                <input type="text"  id="commentsend" placeholder="Comment Here..." />
+                                                <button className='commentsend bg-green' type='button' data-postid={post.postid} onClick={this.commentSend} ><i className="fa fa-send" ></i> </button>
+                                                <button className='comment' type='button' onClick={this.selectPosts} data-postid={post.postid}><i className='fa fa-comments'></i></button>
+                                        </div>
+                                        <div>
+                                            {this.state.selectedpostid==post.postid &&
+                                                <div>
+                                                    <PostComments key={this.state.selectedpostid} SPId={this.state.selectedpostid}/>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    }
                                 }
                             })}
                         </div>

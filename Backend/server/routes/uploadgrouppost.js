@@ -21,9 +21,11 @@ router.get('/', (req, res) => {
         connection.query("SELECT p.post_id as postid,p.post_text,p.imageUpload,p.user_id,p.lat,p.longitude,p.time_stamp,p.post_type,p.org_id,p.imagetype,ud.*, tab.likes,tab2.userlike FROM post p left join user_details ud on p.user_id=ud.user_id left join (SELECT COUNT(user_id) as likes,post_id FROM user_likes group by post_id) tab on p.post_id=tab.post_id left join (SELECT COUNT(user_id) as userlike,post_id FROM user_likes where user_id='"+userid+"' group by post_id) tab2 on p.post_id=tab2.post_id where p.org_id="+orgid+" order by p.post_id desc",(err,data) => {
             if (err)
             throw err;  
-            data.forEach(element => {  
+            data.forEach(element => { 
+                if(element.imageUpload!=null){ 
                 var rawData = fs.readFileSync(element.imageUpload,'base64');
                 element.imageUpload=rawData;     
+                }
                 var rawdata2 =  fs.readFileSync(element.image,'base64');
                 element.image = rawdata2;
     

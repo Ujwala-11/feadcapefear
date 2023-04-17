@@ -20,7 +20,10 @@ var usersRouter = require('./routes/users');
 var loginRouter = require("./routes/login");
 var signupRouter = require('./routes/signup');
 var postRouter = require("./routes/createpost");
+var msgpostRouter = require("./routes/createpostmsg");
 var grouppostRouter = require('./routes/grouppost');
+var msggrouppostRouter = require('./routes/grouppostmsg');
+
 var organizationsget=require('./routes/getorganizations');
 var uploadRouter = require('./routes/uploadpost');
 var uploadgrouppostRouter = require('./routes/uploadgrouppost');
@@ -63,7 +66,10 @@ app.use('/login',loginRouter);
 app.use('/signup',signupRouter);
 app.use('/getorg', organizationsget);
 app.use('/createpost',postRouter);
+app.use('/createpostmsg',msgpostRouter);
 app.use('/grouppost',grouppostRouter);
+app.use('/grouppostmsg',msggrouppostRouter);
+
 app.use('/uploadpost',uploadRouter);
 app.use('/uploadgrouppost',uploadgrouppostRouter);
 app.use('/selectusers',selectusersRouter);

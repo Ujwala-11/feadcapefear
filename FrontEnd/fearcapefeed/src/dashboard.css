@@ -17,7 +17,7 @@ body{
 }
 .brand:hover{
     color:#008f98;
-text-decoration: none;
+    text-decoration: none;
 }
 .sticky-nav{
     position: fixed;
@@ -160,13 +160,19 @@ ul.profile-content li{
 .post-pane .title{
     display: inline-flex;
 }
-.title .image{
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
-    border-radius: 50%;
+.image{
+        width: inherit;
+        height: fit-content;
+        overflow: hidden;
+        border-radius: 50%;
     margin-right: 20px;
 }
+      .user-image{
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+      
+      }
 .content .post-image{
     width: 100%;
     height: 350px;
