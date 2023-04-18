@@ -699,10 +699,8 @@ class UserChat extends Component{
         
     }
     refreshchat(){
-        // this.callChat(this.props.suId);
         var el = document.getElementById('chat-box-min');
         var el2=document.getElementById('ps-bar')
-        // var bt=document.getElementById('refresh');
         if(el.classList.contains('minimize-chat')){
             el.classList.remove('minimize-chat');
             el2.classList.remove('d-none')
