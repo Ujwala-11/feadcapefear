@@ -204,7 +204,7 @@ ul.profile-content li{
 .post_comments .commenter{
     font-weight: bold;
     color: #008f98;
-    margin-bottom: 2px;
+    margin: 6px 0 5px 0;
 }
 .commenter_image{
     width: 20px;
@@ -214,6 +214,7 @@ ul.profile-content li{
 }
 .commenter_image img{
     width: inherit;
+    height: inherit;
     border-radius: 50%;
     
 }

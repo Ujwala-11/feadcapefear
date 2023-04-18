@@ -790,7 +790,7 @@ class PostComments extends Component{
             <ul className='list-none'>
                 {this.state.comments.map((comment)=>{
                     return <div className='post_comments'>
-                        <p className='commenter'><span className='commenter_image'><img src={'data:image/gif;base64,'+comment.image}/></span>{comment.firstname} {comment.lastname}<span className='comment_when'>{comment.time_stamp}</span></p>
+                        <p className='commenter'><span className='commenter_image'><img src={'data:image/gif;base64,'+comment.image}/></span> {comment.firstname} {comment.lastname}<span className='comment_when'>{comment.time_stamp}</span></p>
                         <p className='user_comment'>{comment.comments}</p>
                     </div>
                     ;
