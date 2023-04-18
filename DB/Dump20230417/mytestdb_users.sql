@@ -27,7 +27,7 @@ CREATE TABLE `users` (
   `user_id` varchar(45) NOT NULL,
   `password` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'FCFWJD7923','Johndoe'),(2,'FCFWJD9305','janedoe'),(3,'FCFTJG5663','Joseph'),(4,'FCFTAD4582','albert'),(6,'FCFWHR8751','asdfgh'),(9,'FCFWSR1473','slavrom'),(10,'FCFTAK1674','annaken');
+INSERT INTO `users` VALUES (1,'FCFWJD2412','johndoe'),(2,'FCFWDR9946','donrick'),(3,'FCFWHB6671','hailey'),(4,'FCFTJD2320','janedoe'),(5,'FCFTSD2593','splashdane'),(6,'FCFWPB2177','puppyblack');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-15 16:16:48
+-- Dump completed on 2023-04-17 16:20:02

@@ -16,27 +16,26 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `organization_look_up`
+-- Table structure for table `user_likes`
 --
 
-DROP TABLE IF EXISTS `organization_look_up`;
+DROP TABLE IF EXISTS `user_likes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `organization_look_up` (
-  `organization_id` int NOT NULL AUTO_INCREMENT,
-  `organization_name` varchar(45) NOT NULL,
-  PRIMARY KEY (`organization_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `user_likes` (
+  `user_id` varchar(45) DEFAULT NULL,
+  `post_id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `organization_look_up`
+-- Dumping data for table `user_likes`
 --
 
-LOCK TABLES `organization_look_up` WRITE;
-/*!40000 ALTER TABLE `organization_look_up` DISABLE KEYS */;
-INSERT INTO `organization_look_up` VALUES (1,'Wipro'),(2,'TCS'),(3,'Infosys'),(4,'CTS');
-/*!40000 ALTER TABLE `organization_look_up` ENABLE KEYS */;
+LOCK TABLES `user_likes` WRITE;
+/*!40000 ALTER TABLE `user_likes` DISABLE KEYS */;
+INSERT INTO `user_likes` VALUES ('FCFTSD2593',5),('FCFTSD2593',1),('FCFTSD2593',9),('FCFWHB6671',20),('FCFWHB6671',19),('FCFWHB6671',18);
+/*!40000 ALTER TABLE `user_likes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +47,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-15 16:16:48
+-- Dump completed on 2023-04-17 16:20:02

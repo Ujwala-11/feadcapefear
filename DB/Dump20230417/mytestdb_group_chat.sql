@@ -16,30 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `comments`
+-- Table structure for table `group_chat`
 --
 
-DROP TABLE IF EXISTS `comments`;
+DROP TABLE IF EXISTS `group_chat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `comments` (
-  `comments_id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `group_chat` (
+  `group_chat_id` int NOT NULL AUTO_INCREMENT,
+  `group_id` int NOT NULL,
   `user_id` varchar(45) NOT NULL,
-  `post_id` varchar(45) NOT NULL,
-  `comments` varchar(150) NOT NULL,
-  `time_stamp` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`comments_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `message` varchar(225) NOT NULL,
+  `time_stamp` varchar(50) NOT NULL,
+  PRIMARY KEY (`group_chat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `comments`
+-- Dumping data for table `group_chat`
 --
 
-LOCK TABLES `comments` WRITE;
-/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,'FCFWJD9305','1','cool','2/13/2023, 1:53:10 PM'),(2,'FCFTJG5663','2','night life','2/13/2023, 1:58:07 PM'),(3,'FCFWJD7923','3','nice place','2/13/2023, 2:12:20 PM'),(4,'FCFWJD9305','7','hello','2/14/2023, 5:41:33 PM');
-/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+LOCK TABLES `group_chat` WRITE;
+/*!40000 ALTER TABLE `group_chat` DISABLE KEYS */;
+INSERT INTO `group_chat` VALUES (1,1,'FCFWDR9946','hii','4/4/2023, 2:40:00 PM'),(2,1,'FCFWHB6671','hey','4/4/2023, 2:49:33 PM'),(3,1,'FCFWPB2177','hi','4/12/2023, 4:08:43 PM'),(4,2,'FCFTJD2320','hi','4/13/2023, 2:58:41 PM'),(5,2,'FCFTJD2320','bro','4/13/2023, 2:58:49 PM');
+/*!40000 ALTER TABLE `group_chat` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-15 16:16:48
+-- Dump completed on 2023-04-17 16:20:02

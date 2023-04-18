@@ -16,26 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user_likes`
+-- Table structure for table `comments`
 --
 
-DROP TABLE IF EXISTS `user_likes`;
+DROP TABLE IF EXISTS `comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_likes` (
-  `user_id` varchar(45) DEFAULT NULL,
-  `post_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `comments` (
+  `comments_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(45) NOT NULL,
+  `post_id` varchar(45) NOT NULL,
+  `comments` varchar(150) NOT NULL,
+  `time_stamp` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`comments_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user_likes`
+-- Dumping data for table `comments`
 --
 
-LOCK TABLES `user_likes` WRITE;
-/*!40000 ALTER TABLE `user_likes` DISABLE KEYS */;
-INSERT INTO `user_likes` VALUES ('FCFWSR1473',5),('FCFWSR1473',1),('FCFWJD9305',3),('FCFWJD9305',7),('FCFWSR1473',7),('FCFWJD9305',5),('FCFWJD9305',8),('FCFWJD9305',1);
-/*!40000 ALTER TABLE `user_likes` ENABLE KEYS */;
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+INSERT INTO `comments` VALUES (1,'FCFWHB6671','1','chicken','4/4/2023, 2:16:24 PM'),(2,'FCFTSD2593','5','hhh','4/5/2023, 4:03:27 PM'),(3,'FCFWHB6671','5','ho','4/6/2023, 9:42:54 PM'),(4,'FCFWHB6671','19','hi','4/17/2023, 3:47:21 PM');
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -47,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-15 16:16:48
+-- Dump completed on 2023-04-17 16:20:02
