@@ -588,7 +588,6 @@ render(){
                             <h3 className='chat-title '>
                                 <img id="selected_image" className='chat-title-img '/>
                                 <b id="selected_name">Name</b>
-                                {/* <a className='refresh' onClick={this.refreshchat}><i className='fa fa-refresh'></i></a> */}
                             </h3>
                         </div>
                     {this.state.chatselected && 
