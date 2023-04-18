@@ -167,12 +167,12 @@ ul.profile-content li{
         border-radius: 50%;
     margin-right: 20px;
 }
-      .user-image{
+      /* .user-image{
         width: 50px;
         height: 50px;
         overflow: hidden;
       
-      }
+      } */
 .content .post-image{
     width: 100%;
     height: 350px;
@@ -691,6 +691,7 @@ table, th {
   }
   td .user-image-container .user-image{
     width: inherit;
+    height: inherit;
   }
 .logout_admin{
     position: fixed;
@@ -847,4 +848,9 @@ label {
 }
 .minimize-chat #ps-bar{
     display: none;
+}
+.user-image-div{
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
 }

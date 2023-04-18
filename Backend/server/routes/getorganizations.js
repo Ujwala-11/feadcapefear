@@ -18,7 +18,6 @@ router.get('/', (req, res, login) => {
         if (err)
         throw err;
         var response = JSON.stringify(rows);
-        console.log(response);
         res.send(response);
          });
         

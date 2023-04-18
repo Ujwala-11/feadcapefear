@@ -368,7 +368,7 @@ render(){
                                             </div>
                                                 <div className='title'>
                                                 <div className='image'>
-                                                <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
+                                                <img className="user-image-div" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
                                             </div>
                                             <div>
                                                 <h6>{post.firstname} {post.lastname}</h6>
@@ -408,7 +408,7 @@ render(){
                                             </div>
                                                 <div className='title'>
                                                 <div className='image'>
-                                                    <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
+                                                    <img className="user-image-div" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
                                                 </div>
                                                 <div>
                                                     <h6 >{post.firstname} {post.lastname}</h6>
@@ -450,7 +450,7 @@ render(){
                                             </div>
                                                 <div className='title'>
                                                 <div className='image'>
-                                                <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
+                                                <img className="user-image-div" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
                                             </div>
                                             <div>
                                                 <h6>{post.firstname} {post.lastname}</h6>
@@ -486,7 +486,7 @@ render(){
                                             </div>
                                                 <div className='title'>
                                                 <div className='image'>
-                                                    <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
+                                                    <img className="user-image-div" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
                                                 </div>
                                                 <div>
                                                     <h6 >{post.firstname} {post.lastname}</h6>
@@ -531,7 +531,7 @@ render(){
                                     return<div className='users-pane '>
                                         <div className='multiple-users ' >
                                             <div className='user-image ' >
-                                                <img className="user-image" id="pic" src={"data:image/gif;base64,"+detail.image}  alt="login image"/>
+                                                <img className="user-image-div" id="pic" src={"data:image/gif;base64,"+detail.image}  alt="login image"/>
                                             </div>
                                             <div >
                                                 <h6>{detail.firstname} {detail.lastname}</h6>

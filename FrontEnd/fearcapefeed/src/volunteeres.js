@@ -19,7 +19,6 @@ export default class Volunteer extends Component {
         this.filechange=this.filechange.bind(this);   
         this.uploadimage=this.uploadimage.bind(this);
         this.post=this.post.bind(this);
-        this.selectusers=this.selectusers.bind(this);
         this.selectPosts=this.selectPosts.bind(this);
         this.commentSend=this.commentSend.bind(this);
         this.logincheck=this.logincheck.bind(this);
@@ -134,21 +133,6 @@ filechange(e){
             window.location.reload();
         });
     }
-}
-
-selectusers(e){
-    var a = e.currentTarget.dataset.firstname;
-    var b = e.currentTarget.dataset.lastname;
-    var c = e.currentTarget.dataset.userid;
-    var d = e.currentTarget.dataset.image;
-    this.setState({
-        userselected:true,
-        chatselected:true,
-        selecteduserId:c,
-        selecteduserIdprop:c
-    });
-    document.getElementById("selected_image").setAttribute("src","data:image/gif;base64,"+d)
-    document.getElementById("selected_name").innerHTML = " "+a+" "+b  
 }
 
 commentSend(e){
@@ -358,7 +342,7 @@ render(){
                                     </div>
                                     <div className='title'>
                                         <div className='image'>
-                                            <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
+                                            <img className="user-image-div" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
                                         </div>
                                         <div>
                                             <h6>{post.firstname} {post.lastname}</h6>
@@ -372,7 +356,6 @@ render(){
                                         {post.imagetype==0&&<img className="" id="pic" src={"data:image/gif;base64,"+post.imageUpload} alt="login image" />}
                                     </div>
                                 </div>
-                                {/* <p className='meettime'>Meet at venue before {endhrs}: {endmins} </p> */}
                                 <div className='actions'></div>
                                 {intrest==false&&<div className='commenttext'>
                                     {isliked==true&&<button className='event_count liked' type='button' data-pid={post.eventid} onClick={this.unlike} ><span>Interested</span>{intrested}</button>}
@@ -402,7 +385,7 @@ render(){
                                     </div>
                                     <div className='title'>
                                         <div className='image'>
-                                            <img className="user-image" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
+                                            <img className="user-image-div" id="pic" src={"data:image/gif;base64,"+post.image} alt="login image"/>
                                         </div>
                                         <div>
                                             <h6>{post.firstname} {post.lastname} </h6>
@@ -412,7 +395,6 @@ render(){
                                 <div className='content'>
                                     <p>{post.event_text}</p>
                                 </div>
-                                {/* <p className='meettime'>Meet at venue before {endhrs}: {endmins} </p> */}
                                 <div className='actions'></div>
                                 {intrest==false&&<div className='commenttext'>
                                     {isliked==true&&<button className='event_count liked' type='button' data-pid={post.eventid} onClick={this.unlike} ><span>Interested</span>{intrested}</button>}
@@ -438,43 +420,6 @@ render(){
                         })}
                     </div>   
                 </div>
-                {/* <div className="col-md-3 right-pane mx-3 bg-white">
-                    <div className='users bg-green'>
-                        <h3>Users</h3>
-                    </div>
-                    <div className='users-select'>
-                        <ul>
-                            {this.state.details.map((detail)=>{
-                                return<div className='users-pane '><a onClick={this.selectusers} data-userid={detail.user_id} data-firstname={detail.firstname} data-lastname={detail.lastname}
-                                    data-image={detail.image}>
-                                    <div className='multiple-users ' >
-                                        <div className='user-image ' >
-                                            <img className="user-image" id="pic" src={"data:image/gif;base64,"+detail.image}  alt="login image"/>
-                                        </div>
-                                        <div >
-                                            <h6>{detail.firstname} {detail.lastname}</h6>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </div>
-                            })}
-                        </ul>
-                    </div> */}
-                    {/* {!this.state.userselected && <p id="zero-users">Select users to chat</p>} 
-                    <div className={'chat-section visible-'+this.state.userselected}>
-                        <div className='users bg-green'>
-                            <h3 className='chat-title '>
-                                <img id="selected_image" className='chat-title-img '/>
-                                <b id="selected_name">Name</b>
-                                <a className='refresh' onClick={this.refreshchat}><i className='fa fa-refresh'></i></a>
-                            </h3>
-                        </div>
-                    {this.state.chatselected && 
-                            <UserChat key={this.state.selecteduserId} suId={this.state.selecteduserId}/>
-                       } */}
-{/*                         
-                    </div>        
-                </div>     */}
             </div>
         </div>
     </div>
@@ -482,130 +427,6 @@ render(){
     </>
     )}
 }
-// class UserChat extends Component{
-//     state={
-//         chats:[],
-//         recuid:'',
-//         curDT : new Date().toLocaleString(),
-//         count:0,
-//         intervalId:0,
-//         timerId:null,image:"", imagefiles:null, preview:"", filechosen:false,
-//     }
-//     constructor(props){
-// 		super(props);
-//         this.callChat=this.callChat.bind(this);
-//         this.chatsend=this.chatsend.bind(this);
-//         this.refreshchat=this.refreshchat.bind(this);
-//         this.uploadimage=this.uploadimage.bind(this);
-//         this.changefile=this.changefile.bind(this);   
-//     }
-//     componentDidMount(){
-//         this.callChat(this.props.suId);
-        
-//     }
-//     componentWillUnmount(){
-//     }
-    
-//     callChat(recid){
-//         fetch(address+"getchatdata?userid="+window.localStorage.getItem("userid")+"&recieverid="+recid)
-//         .then(res =>res.json())
-//         .then(res=> this.setState({ chats: res, recuid:recid}));
-//     }
-//     uploadimage(){
-//         document.getElementById('image-file').click();
-//     }
-//     changefile(e){
-//         var files = document.getElementById('image-file').files[0]
-//         this.setState({
-//             imagefiles : files,
-//             filechosen : true,
-//             preview : URL.createObjectURL(e.target.files[0])
-//         })
-//     }
-//     chatsend(){
-//         var chat = document.getElementById("chatsend").value;
-//         var sender = window.localStorage.getItem("userid");
-//         var reciever = this.props.suId;
-//         var date = this.state.curDT;
-//         var type ;
-//         if(this.state.imagefiles==null){
-//             type = 0;
-//             alert(this.state.imagefiles+""+type)
-//             let formdata = new FormData();
-//             formdata.append('chatsend', chat);
-//             formdata.append('sender',sender);
-//             formdata.append('reciever',reciever);
-//             formdata.append("timestamp",date);
-//             formdata.append("type",type);
-//             axios.post(address+'chatdatamsg',formdata)
-//             .then(res=>{
-//                 document.getElementById("chatsend").value="";
-//                 this.callChat(reciever);
-//             });
-//         }
-//         else{
-//             type = 1;
-//             alert(this.state.imagefiles+""+type)
-//             let formdata = new FormData();
-//             formdata.append('image',this.state.imagefiles);
-//             formdata.append('chatsend', chat);
-//             formdata.append('sender',sender);
-//             formdata.append('reciever',reciever);
-//             formdata.append("timestamp",date);
-//             formdata.append("type",type);
-//             axios.post(address+'chatdata',formdata)
-//             .then(res=>{
-//                 document.getElementById("chatsend").value="";
-//                 this.callChat(reciever);
-//             });
-//         }
-        
-//     }
-//     refreshchat(){
-//         this.callChat(this.props.suId);
-//     }
-    
-//     render(){
-//         return <>
-//         <div className='chat-box'>
-//              <a className='refresh' onClick={this.refreshchat}><i className='fa fa-refresh'></i></a>
-//             <ul className='list-none pl-15'>
-//             {this.state.chats.map((cht)=>{
-//                     if(cht.from_user==window.localStorage.getItem("userid")){
-//                         if(cht.type==0){
-//                             return <li className='from-message'>{cht.message} <span>{cht.time_stamp}</span></li>
-//                         }else{
-//                             return <li className='from-message'><img id='image-chat' src={"data:image/gif;base64,"+cht.chatimage}/>{cht.message}<span>{cht.time_stamp}</span></li>
-//                         }
-//                     }
-//                     else{
-//                         if(cht.type==1){
-//                             return <li className='to-message'> <img  id='image-chat'src={"data:image/gif;base64,"+cht.chatimage}/>{cht.message} <span>{cht.time_stamp}</span></li>
-//                         }else{
-//                             return <li className='to-message'>{cht.message} <span>{cht.time_stamp}</span></li>
-
-//                         }
-//                     }
-//                 })}
-//                 </ul>
-//                 {!this.state.preview && <img src={''} height='0' width='0'/>} 
-//                 {this.state.preview && <img id="chat-image-post" src={this.state.preview} />}
-//             </div>
-//             <div className='post-bar'>
-//                 <div className='post-text-bar'>
-//                 <p id="post-image" onClick={this.uploadimage} ><i className='cam fa fa-camera' id='fa-fa-camera' ></i>
-//                         <input type='file' id="image-file" name="imageUpload" accept='image/jpg, image/png, image/jpeg,video/*' className='d-none' onChange={this.changefile}/>
-
-//                     </p>
-//                     <input type="text" placeholder="Type Here.." id="chatsend"/>
-//                     <div >
-//                         <button className='post-message-btn bg-green' type='button' onClick={this.chatsend} ><i className="fa fa-send" ></i> </button>
-//                     </div>
-//                 </div>  
-//             </div>
-//         </>
-//     }
-// }
 class PostComments extends Component{
     state={
         comments:[],
