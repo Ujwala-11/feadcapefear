@@ -5,7 +5,7 @@ import userImage from "./resources/profilepic.jpg";
 import {address} from './variables';
 
 
-import image from "./resources/hd-wallpaper-g6cdf55a9b_1920.jpg";
+import image from "./resources/grouplogo.png";
 
 export default class GroupBoard extends Component {
     state = {
