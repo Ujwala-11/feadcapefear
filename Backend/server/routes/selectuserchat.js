@@ -14,8 +14,7 @@ router.get('/', (req, res) => {
         });
         connection.connect();
 
-        connection.query("SELECT * FROM user_details where user_id != '"+userid+"' and status=1", (err,data) => {
-          
+        connection.query("SELECT ud.*,c.* FROM user_details ud left join chat c on ud.user_id=c.to_user where ud.user_id != '"+userid+"' and ud.status=1 and c.from_user='"+userid+"' GROUP BY c.to_user ORDER BY c.to_user DESC", (err,data) => {  
         if (err)
         throw err;  
         data.forEach(element => {      
@@ -23,6 +22,7 @@ router.get('/', (req, res) => {
             element.image = rawdata;
         });
             rows=JSON.stringify(data);
+            // console.log(rows);
             res.send(rows);
         });
         

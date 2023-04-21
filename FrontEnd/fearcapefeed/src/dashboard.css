@@ -300,6 +300,10 @@ ul.profile-content li{
     background-color: #ddd;
     gap:10px;
 }
+.multiple-users.with-message{
+    background-color: #888!important;
+    color:#fff!important
+}
 .multiple-users .user-image{
     height:45px;
     width:45px;

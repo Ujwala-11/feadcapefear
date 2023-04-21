@@ -23,11 +23,12 @@ var postRouter = require("./routes/createpost");
 var msgpostRouter = require("./routes/createpostmsg");
 var grouppostRouter = require('./routes/grouppost');
 var msggrouppostRouter = require('./routes/grouppostmsg');
-
 var organizationsget=require('./routes/getorganizations');
 var uploadRouter = require('./routes/uploadpost');
 var uploadgrouppostRouter = require('./routes/uploadgrouppost');
 var selectusersRouter = require('./routes/selectusers');
+var selectuserschatRouter = require('./routes/selectuserchat');
+
 var chatdataRouter = require('./routes/chatdata');
 var chatdatamsgRouter = require('./routes/chatdatamsg');
 var getchatdataRouter = require('./routes/getchatdata');
@@ -69,10 +70,11 @@ app.use('/createpost',postRouter);
 app.use('/createpostmsg',msgpostRouter);
 app.use('/grouppost',grouppostRouter);
 app.use('/grouppostmsg',msggrouppostRouter);
-
 app.use('/uploadpost',uploadRouter);
 app.use('/uploadgrouppost',uploadgrouppostRouter);
 app.use('/selectusers',selectusersRouter);
+app.use('/selectuserchat',selectuserschatRouter);
+
 app.use('/chatdata',chatdataRouter);
 app.use('/chatdatamsg',chatdatamsgRouter);
 app.use('/getchatdata',getchatdataRouter);

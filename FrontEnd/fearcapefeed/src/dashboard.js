@@ -12,7 +12,7 @@ export default class Dashboard extends Component {
         isloggedin:'',image:'',imagefile:null,filechosen:false, preview:"" ,posts:[],details:[],chats:[],
         userValue:'',userselected:false,selecteduserId:'',curDT : new Date().toLocaleString(),chatselected:false,
         status:0,showallposts:false,selectedpostid:'',latitude:'0',longitude:'0',selectedPosttype:"",videofile:null,
-        videochose:false,imagechoose:false,imagetype:null,
+        videochose:false,imagechoose:false,imagetype:null,chatdetails:[],finallist:[],nomsglist:[]
     }
     constructor(props){
 		super(props);
@@ -41,7 +41,7 @@ export default class Dashboard extends Component {
         this.setState({image:window.localStorage.getItem("image")});
         this.setState({isloggedin:window.localStorage.getItem("isloggedin")});
         this.logincheck();
-        this.callAPI();  
+        this.callAPI();
     }
     logincheck(){
         var isloggedin= window.localStorage.getItem("isloggedin");
@@ -49,13 +49,50 @@ export default class Dashboard extends Component {
             window.location.replace("/")
         }
     }
-    callAPI() {
+    async callAPI() {
+        var list1=[];
+        var list2=[];
+        var fl=[];
+        var nml=[];
+        var resp1= await fetch(address+"selectusers?userid="+window.localStorage.getItem("userid"))
+        .then(res =>res.json())
+        .then((res) => {this.setState({ details: res});
+         list1=res});
         fetch(address+"uploadpost?userid="+window.localStorage.getItem("userid"))
         .then(res =>res.json())
         .then(res => this.setState({ posts: res })); 
-        fetch(address+"selectusers?userid="+window.localStorage.getItem("userid"))
+        var resp2=await fetch(address+"selectuserchat?userid="+window.localStorage.getItem("userid"))
         .then(res =>res.json())
-        .then(res=> this.setState({ details: res}));
+        .then((res)=> {
+            this.setState({ chatdetails: res});
+        list2=res});
+        list1.forEach(usr => {
+            var ifchat = list2.find((x)=> {return x.user_id==usr.user_id});
+                if(ifchat){
+                    const newuser={
+                        user_id:ifchat.user_id,
+                        image:ifchat.image,
+                        firstname:ifchat.firstname,
+                        lastname:ifchat.lastname,
+                        haschat:true,
+                    }
+                    fl.push(newuser);
+                    
+                }else{
+                    const newuser={
+                        user_id:usr.user_id,
+                        image:usr.image,
+                        firstname:usr.firstname,
+                        lastname:usr.lastname,
+                        haschat:false,
+                    }
+                    nml.push(newuser);
+                    
+                } 
+                
+        });
+        this.setState({ finallist: fl});
+        this.setState({ nomsglist: nml});
     }
     
     showPostform(){
@@ -559,14 +596,23 @@ render(){
                     <div className='users bg-green'>
                         <h3>Users</h3>
                     </div>
-                    {/* <div className='search-bar'>
-                       <i className="fa fa-search icon"></i>
-                        <input className="input-field" type="text"
-                          placeholder="Search.." />
-                    </div> */}
                     <div className='users-select'>
                         <ul>
-                            {this.state.details.map((detail)=>{
+                            {this.state.chatdetails.map((detail)=>{
+                                return<div className='users-pane '><a onClick={this.selectusers} data-userid={detail.user_id} data-firstname={detail.firstname} data-lastname={detail.lastname}
+                                    data-image={detail.image}>
+                                    <div className='multiple-users with-message' >
+                                        <div className='user-image ' >
+                                            <img className="user-image" id="pic" src={"data:image/gif;base64,"+detail.image}  alt="login image"/>
+                                        </div>
+                                        <div >
+                                            <h6>{detail.firstname} {detail.lastname}</h6>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>                               
+                            })}
+                            {this.state.nomsglist.map((detail)=>{
                                 return<div className='users-pane '><a onClick={this.selectusers} data-userid={detail.user_id} data-firstname={detail.firstname} data-lastname={detail.lastname}
                                     data-image={detail.image}>
                                     <div className='multiple-users ' >
@@ -578,7 +624,7 @@ render(){
                                         </div>
                                     </div>
                                     </a>
-                                </div>
+                                </div>                               
                             })}
                         </ul>
                     </div>
@@ -593,13 +639,11 @@ render(){
                     {this.state.chatselected && 
                             <UserChat key={this.state.selecteduserId} suId={this.state.selecteduserId}/>
                        }
-                        
                     </div>        
                 </div>    
             </div>
         </div>
-    </div>}
-        
+    </div>}     
     </>
     )}
 }
@@ -647,7 +691,6 @@ class UserChat extends Component{
                 imagetype:1,
                 preview : URL.createObjectURL(files)
             })
-            alert(this.state.preview);
         }
         else{
             this.setState({
@@ -657,7 +700,6 @@ class UserChat extends Component{
                 imagetype:0,
                 preview : URL.createObjectURL(files)
             })
-            alert(this.state.preview);
         }
     }
     chatsend(){
@@ -694,6 +736,8 @@ class UserChat extends Component{
             .then(res=>{
                 document.getElementById("chatsend").value="";
                 this.callChat(reciever);
+                this.state.preview=null;
+                this.state.imagefiles=null;
             });
         }
         
